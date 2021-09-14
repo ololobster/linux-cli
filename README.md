@@ -28,7 +28,8 @@ Linux CLI
    [службы systemd](#службы-systemd),
    [монтирование с systemd](#монтирование-с-systemd)
 1. [Переменные окружения](#переменные-окружения)
-1. [Криптография](#криптография)
+1. [Криптография](#криптография):
+   [пакет ldap-utils](#пакет-ldap-utils)
 1. [Deb-пакеты](#deb-пакеты):
    [репозитории](#репозитории),
    [сборка пакета](#сборка-пакета),
@@ -43,7 +44,6 @@ Linux CLI
    [блок if-elif-else-fi](#блок-if-elif-else-fi),
    [циклы](#циклы)
 1. [Прочее](#прочее):
-   [пакет ldap-utils](#пакет-ldap-utils),
    [контрольные суммы](#контрольные-суммы),
    [youtube-dl](#youtube-dl)
    [манипуляции с документами](#манипуляции-с-документами)
@@ -1089,6 +1089,64 @@ alias grep='grep --color=auto'
 $ gpg --armor --output ⟨output key file⟩ --export ⟨id⟩
 ```
 
+Расшифровать сообщение в формате ASN.1 DER:
+```
+$ openssl asn1parse -inform der -in ⟨file⟩
+```
+
+Вывести сертификаты в указанной БД:
+```
+$ certutil -L -d ~/.mozilla/firefox/*.default
+```
+
+Создать сертификат и ключи в виде PFX-файла (формат PKCS #12):
+```
+$ openssl genrsa -des3 -out myCA.key 2048
+$ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 1825 -out myCA.pem
+$ openssl pkcs12 -inkey myCA.key -in myCA.pem -export -out myCA.pfx
+```
+
+Поучить билет Kerberos:
+```
+$ kinit -f ⟨user⟩
+```
+
+Вывести билеты Kerberos:
+```
+$ klist
+```
+
+### Пакет ldap-utils
+
+Выполнить LDAP-запрос:
+```
+$ ldapsearch -H ldap://⟨host⟩ -LLL -Q -o ldif-wrap=no -b ⟨DN⟩ ⟨filter⟩
+```
+Примечания:
+1. `-Q` — использовать SASL-аутентификацию + тихий режим.
+   Работает, если есть активный билет Kerberos.
+1. `-LLL` — вывести результат в формате LDIF без комментариев и версии.
+1. `-S` — атрибут, по которому происходит сортировка.
+   Пустая строка означает сортировку по DN.
+1. `-s` — область поиска (scope): `base`, `one`, `sub` или `children`.
+
+Получить доступные механизмы SASL-аутентификации:
+```
+$ ldapsearch -H ldap://⟨host⟩ -x -LLL -s base -b "" supportedSASLMechanisms
+```
+
+Добавить записи в службу каталогов:
+```
+$ ldapadd -Q -H ldap://⟨host⟩ -f ⟨LDIF file⟩
+```
+
+Удалить запись из службы каталогов:
+```
+$ ldapdelete -Q -H ldap://⟨host⟩ ⟨DN⟩
+```
+Примечания:
+1. Может работать с LDIF-файлами как `ldapadd`.
+
 # Deb-пакеты
 
 Получить список установленных пакетов:
@@ -1668,37 +1726,6 @@ $ find . -name '*.sh' | xargs rm -f
 ```
 # aptitude install texlive texlive-base texlive-lang-cyrillic texlive-latex-extra texlive-font-utils
 ```
-
-### Пакет ldap-utils
-
-Выполнить LDAP-запрос:
-```
-$ ldapsearch -H ldap://⟨host⟩ -LLL -Q -o ldif-wrap=no -b ⟨DN⟩ ⟨filter⟩
-```
-Примечания:
-1. `-Q` — использовать SASL-аутентификацию + тихий режим.
-   Работает, если есть активный билет Kerberos.
-1. `-LLL` — вывести результат в формате LDIF без комментариев и версии.
-1. `-S` — атрибут, по которому происходит сортировка.
-   Пустая строка означает сортировку по DN.
-1. `-s` — область поиска (scope): `base`, `one`, `sub` или `children`.
-
-Получить доступные механизмы SASL-аутентификации:
-```
-$ ldapsearch -H ldap://⟨host⟩ -x -LLL -s base -b "" supportedSASLMechanisms
-```
-
-Добавить записи в службу каталогов:
-```
-$ ldapadd -Q -H ldap://⟨host⟩ -f ⟨LDIF file⟩
-```
-
-Удалить запись из службы каталогов:
-```
-$ ldapdelete -Q -H ldap://⟨host⟩ ⟨DN⟩
-```
-Примечания:
-1. Может работать с ldif-файлами как `ldapadd`.
 
 ### Контрольные суммы
 
