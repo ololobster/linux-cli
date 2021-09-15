@@ -1756,6 +1756,12 @@ $ cksum ⟨file⟩
 
 ### youtube-dl
 
+`youtube-dl` из пакетов обычно бесполезен.
+Надо ставить pipкой самый свежий:
+```
+# pip install youtube-dl
+```
+
 Скачать видео в 720p:
 ```
 $ youtube-dl -f 'bestvideo[height=720][ext=mp4]+bestaudio[ext=m4a]' ⟨url⟩
