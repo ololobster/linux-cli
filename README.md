@@ -1812,6 +1812,11 @@ $ youtube-dl -x --audio-format mp3 ⟨url⟩
 
 ### Манипуляции с документами
 
+Сгенерировать многостраничный TIF из нескольких JPG (нужен пакет `imagemagick`):
+```
+$ convert -compress jpeg -quality 50 ⟨directory⟩/*.jpg ⟨output TIF⟩
+```
+
 Вывести инфу по изображению (нужен пакет `imagemagick`):
 ```
 $ identify -verbose ⟨path⟩
@@ -1822,12 +1827,17 @@ $ identify -verbose ⟨path⟩
 $ pngcheck ⟨PNG file⟩
 ```
 
-Сгенерировать многостраничный TIF из нескольких JPG (нужен пакет `imagemagick`):
-```
-$ convert -compress jpeg -quality 50 ⟨directory⟩/*.jpg ⟨output TIF⟩
-```
-
 Сгенерировать PDF-файл без сжатия:
 ```
 $ qpdf --qdf --object-streams=disable --stream-data=uncompress --generate-appearances ⟨input PDF⟩ ⟨output PDF⟩
+```
+
+Снять пароль с PDF-файла:
+```
+$ qpdf --decrypt --password=⟨password⟩ ⟨input PDF⟩ ⟨output PDF⟩
+```
+
+Поставить пароль на PDF-файл (AES 256 бит):
+```
+$ qpdf --encrypt ⟨user password⟩ ⟨owner password⟩ 256 -- ⟨input PDF⟩ ⟨output PDF⟩
 ```
