@@ -1151,7 +1151,7 @@ MD5 файла:
 ```
 $ md5sum ⟨file⟩
 ```
-`sha256sum`, `sha512sum` — аналогично.
+`sha1sum`, `sha256sum`, `sha512sum` — аналогично.
 
 Кодировать строку в base64:
 ```
@@ -1241,25 +1241,30 @@ $ dpkg -L ⟨package⟩
 $ dpkg -S ⟨path⟩
 ```
 
-Вывести полное дерево зависимостей (нужен пакет `apt-rdepends`):
+Вывести полное дерево зависимостей пакета (нужен пакет `apt-rdepends`):
 ```
 $ apt-rdepends ⟨package⟩
 ```
 
-Пометить пакет как установленный вручную, дабы его не удалило:
+Выпилить установленные автоматически пакеты, которые больше не нужны:
+```
+# sudo apt-get autoremove
+```
+
+Пометить пакет как установленный вручную, дабы его ненароком не удалило:
 ```
 # apt-mark manual ⟨package⟩
+```
+
+Удалить скачанные deb-пакеты (лежат в `/var/cache/apt/archives`):
+```
+# apt-get clean
 ```
 
 Обновиться на новый релиз:
 ```
 # aptitude update
 # aptitude full-upgrade
-```
-
-Удалить скачанные deb-пакеты (лежат в `/var/cache/apt/archives`):
-```
-# apt-get clean
 ```
 
 Установить пакет из файла:
@@ -1270,7 +1275,8 @@ $ apt-rdepends ⟨package⟩
 1. Осторожно! Оно не проверяет зависимости до начала установки.
 1. `--force-all` для игнора проблем с зависимостями.
 1. `--force-architecture` отключает проверку архитектуры.
-1. Чтобы установить не в `/` (например, для кросс-компиляции): `--force-not-root --root=⟨path⟩`.
+1. Чтобы установить не в `/`: `--force-not-root --root=⟨path⟩`.
+   Пригодится при кросс-компиляции.
 
 Распаковать deb-файл:
 ```
@@ -1476,65 +1482,7 @@ $ make
 
 ### CMake
 
-Собрать проект в отдельном каталоге:
-```
-$ mkdir build
-$ cd build
-$ cmake ..
-$ cmake --build .
-```
-Примечание: в любой непонятной ситуации ставить пакет `extra-cmake-modules`.
-
-Определить опцию (может быть только `ON` или `OFF`):
-```
-option(⟨variable⟩ "⟨help text⟩" ⟨default value⟩)
-```
-Если не указать значение по умолчанию, то будет `OFF`.
-
-Определить переменную (Normal Variable):
-```
-set(⟨variable⟩ ⟨value⟩)
-```
-
-Определить Cache Entry:
-```
-set(⟨variable⟩ ⟨value⟩ CACHE ⟨type⟩ ⟨docstring⟩ [FORCE])
-```
-Примечания:
-1. Если переменной с таким именем нет, то CMake лезет в кеш.
-1. По умолчанию существующие значения не перезаписываются.
-   `FORCE` в помощь.
-
-Можно задать переменные и пр. в cmake-файле и указать на него при помощи `-DCMAKE_TOOLCHAIN_FILE=⟨path⟩`.
-
-Флаги компилятора кладутся в `CMAKE_C_FLAGS`, `CMAKE_CXX_FLAGS`, `CMAKE_EXE_LINKER_FLAGS_INIT`, `CMAKE_SHARED_LINKER_FLAGS_INIT`, `CMAKE_MODULE_LINKER_FLAGS_INIT`.
-
-Примерный набор параметров для кросс-компилиции:
-- `CMAKE_SYSTEM_NAME`, например, Linux;
-- `CMAKE_SYSTEM_PROCESSOR`, например, mipsel;
-- `CMAKE_C_COMPILER` и/или `CMAKE_CXX_COMPILER`;
-- `CMAKE_INSTALL_PREFIX`.
-
-Если нужно окружение, то задать:
-- `CMAKE_SYSROOT`;
-- `CMAKE_FIND_ROOT_PATH_MODE_PROGRAM` = `NEVER`;
-- `CMAKE_FIND_ROOT_PATH_MODE_LIBRARY` = `ONLY`;
-- `CMAKE_FIND_ROOT_PATH_MODE_INCLUDE` = `ONLY`;
-- `CMAKE_FIND_ROOT_PATH_MODE_PACKAGE` = `ONLY`.
-
-Настройка генерации `config.h`:
-```
-#cmakedefine ENABLE_CPRO 1
-```
-Если переменная существует, то результатом будет `#define ENABLE_CPRO 1`.
-См. также `#cmakedefine01`.
-
-Запустить тесты:
-```
-$ ctest
-```
-Примечания:
-1. Можно добавить переменную окружения `CTEST_OUTPUT_ON_FAILURE=1`.
+См. [заметки по CMake](https://github.com/ololobster/cmake-notes/).
 
 ### gdb
 
