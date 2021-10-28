@@ -922,7 +922,7 @@ $ dig ⟨domain name⟩
 
 Создать пользователя и задать ему пароль:
 ```
-# useradd --create-home ⟨user⟩
+# useradd --create-home --shell /bin/bash ⟨user⟩
 # passwd ⟨user⟩
 ```
 
@@ -988,6 +988,11 @@ $ locale -a
 Запустить интерактивный генератор локалей:
 ```
 # dpkg-reconfigure locales
+```
+
+Установить часовой пояс:
+```
+# timedatectl set-timezone 'Europe/Moscow'
 ```
 
 # Службы systemd
@@ -1363,6 +1368,11 @@ Acquire::http:Proxy "http://⟨host⟩:⟨port⟩";
 Собрать пакеты из папки с исходниками (требуются пакеты `devscripts`, `build-essential`, `lintian`):
 ```
 $ debuild --no-tgz-check -d -us -uc
+```
+
+Вывести последнюю версию в файле `debian/changelog`:
+```
+$ dpkg-parsechangelog --show-field Version
 ```
 
 Скачать из репозитория исходники и собрать пакет:
