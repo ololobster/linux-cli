@@ -42,7 +42,8 @@
 1. [RPM-пакеты](#rpm-пакеты)
 1. [Ядро, модули ядра](#ядро-модули-ядра)
 1. [Разработка](#разработка):
-   [autotools](#autotools),
+   [pkg-config](#pkg-config),
+   [Autotools](#autotools),
    [CMake](#cmake),
    [gdb](#gdb)
 1. [Скрипты на Bash](#скрипты-на-bash):
@@ -1496,13 +1497,34 @@ $ lsmod
 
 # Разработка
 
-Получить названия пакетов для использования в `PKG_CHECK_MODULES`:
+При помощи `--always-make` можно заставить `make` выполнить сборку, даже если он считает, что она не требуется.
+
+### pkg-config
+
+pkg-config предоставляет средства для подключения к проекту библиотек с учётом их зависимостей.
+Каждый пакет pkg-config представляет собой текстовый файл.
+Пример:
+```
+$ cat /usr/lib/x86_64-linux-gnu/pkgconfig/poppler-qt5.pc
+prefix=/usr
+libdir=/usr/lib/x86_64-linux-gnu
+includedir=/usr/include
+
+Name: poppler-qt5
+Description: Qt5 bindings for poppler
+Version: 20.09.0
+Requires:
+Requires.private: poppler = 20.09.0
+
+Libs: -L${libdir} -lpoppler-qt5
+Cflags: -I${includedir}/poppler/qt5
+```
+
+Вывести все известные пакеты:
 ```
 $ pkg-config --list-all
 ```
-В переменной окружения `PKG_CONFIG_PATH` лежат доп. пути, где `pkg-config` будет искать пакеты.
-
-При помощи `--always-make` можно заставить `make` выполнить сборку, даже если он считает, что она не требуется.
+В переменной окружения `PKG_CONFIG_PATH` лежат доп. пути, где pkg-config будет искать пакеты.
 
 ### Autotools
 
