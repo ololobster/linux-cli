@@ -1502,29 +1502,31 @@ $ lsmod
 ### pkg-config
 
 pkg-config предоставляет средства для подключения к проекту библиотек с учётом их зависимостей.
-Каждый пакет pkg-config представляет собой текстовый файл.
+Каждый модуль pkg-config представляет собой текстовый файл.
 Пример:
 ```
-$ cat /usr/lib/x86_64-linux-gnu/pkgconfig/poppler-qt5.pc
+$ cat /usr/lib/x86_64-linux-gnu/pkgconfig/poppler-glib.pc
 prefix=/usr
 libdir=/usr/lib/x86_64-linux-gnu
 includedir=/usr/include
 
-Name: poppler-qt5
-Description: Qt5 bindings for poppler
+Name: poppler-glib
+Description: GLib wrapper for poppler
 Version: 20.09.0
-Requires:
+Requires: glib-2.0 >= 2.41 gobject-2.0 >= 2.41 cairo >= 1.10.0
 Requires.private: poppler = 20.09.0
 
-Libs: -L${libdir} -lpoppler-qt5
-Cflags: -I${includedir}/poppler/qt5
+Libs: -L${libdir} -lpoppler-glib
+Cflags: -I${includedir}/poppler/glib
 ```
 
-Вывести все известные пакеты:
+Модули pkg-config живут в каталоге с библиотеками, например, `/usr/lib/x86_64-linux-gnu/pkgconfig`.
+При помощи переменной окружения `PKG_CONFIG_PATH` можно указать дополнительные каталоги с модулями.
+
+Вывести все известные модули:
 ```
 $ pkg-config --list-all
 ```
-В переменной окружения `PKG_CONFIG_PATH` лежат доп. пути, где pkg-config будет искать пакеты.
 
 ### Autotools
 
