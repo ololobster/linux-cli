@@ -1844,6 +1844,11 @@ $ youtube-dl -x --audio-format mp3 ⟨url⟩
 $ convert -compress jpeg -quality 50 ⟨directory⟩/*.jpg ⟨output TIF⟩
 ```
 
+Распилить многостраничный TIF на отдельные картинки:
+```
+$ convert ⟨input TIF⟩ %d.tif
+```
+
 Вывести инфу по изображению (нужен пакет `imagemagick`):
 ```
 $ identify -verbose ⟨path⟩
