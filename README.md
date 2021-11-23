@@ -113,6 +113,19 @@ ololo
 
 ### SSH (Secure Shell)
 
+Подключиться к удалённой ЭВМ по SSH:
+```
+$ ssh ⟨user⟩@⟨server⟩
+```
+Примечания:
+1. Можно использовать конкретный ключ для аутентификации: `-i ⟨private key file⟩`.
+   Это файл должен иметь права `600`.
+
+Пробросить порт по SSH:
+```
+$ ssh -f -N -L ⟨localhost port⟩:⟨target host⟩:⟨target port⟩ ⟨user⟩@⟨public server⟩
+```
+
 Сгенерировать ключи:
 ```
 $ ssh-keygen
@@ -126,11 +139,6 @@ $ ssh-copy-id ⟨user⟩@⟨host⟩
 Примечания:
 1. Это добавит новый публичный ключ в файл `~/.ssh/authorized_keys` на сервере.
 1. Если всё равно просит пароль, то на сервере смотрим права `authorized_keys` и его родительских папок (должно быть `600`).
-
-Пробросить порт по SSH:
-```
-$ ssh -f -N -L ⟨localhost port⟩:⟨target host⟩:⟨target port⟩ ⟨user⟩@⟨public server⟩
-```
 
 Удалить хост из файла `known_hosts`:
 ```
