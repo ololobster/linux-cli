@@ -988,6 +988,8 @@ sudo ⟨command⟩
   ⟨user⟩ ALL=(ALL) NOPASSWD:ALL
   ```
 
+При правке `/etc/sudoers` руками, всегда следует использовать `visudo`.
+
 ### Локаль
 
 Для того, чтобы сменить локаль, обычно достаточно задать переменную окружения `LANG`.
@@ -1384,7 +1386,7 @@ Acquire::http:Proxy "http://⟨host⟩:⟨port⟩";
 Обновление оригинального пакета не заменит наши файлы.
 Удаление нашего пакета удалит эти файлы, т.е. оригинальный пакет будет де-факто сломанным (`aptitude reinstall` в помощь).
 
-Собрать пакеты из папки с исходниками (требуются пакеты `devscripts`, `build-essential`, `lintian`):
+Собрать пакеты из папки с исходниками (нужны пакеты `devscripts`, `build-essential`, `lintian`):
 ```
 $ debuild --no-tgz-check -d -us -uc
 ```
@@ -1436,10 +1438,16 @@ $ yumdownloader --source ⟨package⟩
 ```
 $ rpmbuild --rebuild ⟨src.rpm file⟩
 ```
-Собрать RPM-пакеты по `spec`-файлу:
-```
-$ rpmbuild -ba ⟨spec file⟩
-```
+
+Собрать RPM-пакеты по spec-файлу:
+1. Скачать исходники (нужен пакет `rpmdevtools`):
+   ```
+   $ spectool -g -R ⟨spec file⟩
+   ```
+1. Собрать RPM-пакеты (нужен пакет `rpm-build`):
+   ```
+   $ rpmbuild -ba ⟨spec file⟩
+   ```
 
 Распаковать `rpm`-архив в текущий каталог:
 ```
