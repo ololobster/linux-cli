@@ -1446,8 +1446,9 @@ $ rpmbuild --rebuild ⟨src.rpm file⟩
    ```
 1. Собрать RPM-пакеты (нужен пакет `rpm-build`):
    ```
-   $ rpmbuild -ba ⟨spec file⟩
+   $ rpmbuild -bb ⟨spec file⟩
    ```
+   Примечание: если нужен пакет `src.rpm`, то использовать `-ba`.
 
 Распаковать `rpm`-архив в текущий каталог:
 ```
