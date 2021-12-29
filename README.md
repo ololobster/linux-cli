@@ -1439,7 +1439,7 @@ $ yumdownloader --source ⟨package⟩
 $ rpmbuild --rebuild ⟨src.rpm file⟩
 ```
 
-Собрать RPM-пакеты по spec-файлу:
+Собрать RPM-пакеты по SPEC-файлу:
 1. Скачать исходники (нужен пакет `rpmdevtools`):
    ```
    $ spectool -g -R ⟨spec file⟩
@@ -1450,7 +1450,12 @@ $ rpmbuild --rebuild ⟨src.rpm file⟩
    ```
    Примечание: если нужен пакет `src.rpm`, то использовать `-ba`.
 
-Распаковать `rpm`-архив в текущий каталог:
+Извлечь версию из SPEC-файла:
+```
+$ rpmspec -q --srpm --qf "%{version}" ⟨spec file⟩
+```
+
+Распаковать RPM-архив в текущий каталог:
 ```
 $ rpm2cpio ⟨rpm file⟩ | cpio -idmv
 ```
