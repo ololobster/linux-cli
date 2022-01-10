@@ -1351,7 +1351,12 @@ $ dpkg -x ⟨deb file⟩ ⟨target directory⟩
 ```
 deb ⟨repo location⟩ ⟨distribution⟩ ⟨component1⟩ ⟨component2⟩ ⟨component3⟩...
 ```
-Доступные дистрибутивы можно посмотреть в каталоге `⟨repo location⟩/dists`.
+Примечания:
+1. Доступные дистрибутивы можно посмотреть в каталоге `⟨repo location⟩/dists`.
+1. Тут же можно указать ключ, например:
+   ```
+   deb [signed-by=/usr/share/keyrings/deriv-archive-keyring.gpg] https://deriv.example.net/debian/ stable main
+   ```
 
 Добавить публичный ключ репозитория (нужен пакет `gnupg`):
 ```
