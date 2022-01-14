@@ -1459,6 +1459,11 @@ $ rpm -ql ⟨package⟩
 $ repoquery --list ⟨package⟩
 ```
 
+Вывести пакет, из которого появился файл:
+```
+$ rpm -qf ⟨path⟩
+```
+
 Импортировать ключ репозитория:
 ```
 $ rpm --import ⟨key file⟩
