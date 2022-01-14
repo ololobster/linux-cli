@@ -1299,7 +1299,7 @@ $ addr2line -f -e okularGenerator_poppler.so 0x37e82
 
 # Deb-пакеты
 
-Получить список установленных пакетов:
+Вывести список установленных пакетов:
 ```
 $ apt list --installed
 ```
@@ -1447,6 +1447,23 @@ $ quilt pop -a
 
 # RPM-пакеты
 
+Вывести список установленных пакетов (2 варианта):
+```
+$ rpm -qa
+$ yum list installed
+```
+
+Вывести список файлов, установленных пакетом (2 варианта):
+```
+$ rpm -ql ⟨package⟩
+$ repoquery --list ⟨package⟩
+```
+
+Импортировать ключ репозитория:
+```
+$ rpm --import ⟨key file⟩
+```
+
 Скачать исходники пакета (файл `src.rpm`):
 ```
 $ yumdownloader --source ⟨package⟩
@@ -1476,17 +1493,6 @@ $ rpmspec -q --srpm --qf "%{version}" ⟨spec file⟩
 Распаковать RPM-архив в текущий каталог:
 ```
 $ rpm2cpio ⟨rpm file⟩ | cpio -idmv
-```
-
-Вывести список файлов, установленных пакетом (2 варианта):
-```
-$ rpm -ql ⟨package⟩
-$ repoquery --list ⟨package⟩
-```
-
-Импортировать ключ репозитория:
-```
-$ rpm --import ⟨key file⟩
 ```
 
 # Ядро, модули ядра
