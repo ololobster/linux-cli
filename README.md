@@ -1384,9 +1384,9 @@ Acquire::http:Proxy "http://⟨host⟩:⟨port⟩";
 ### Сборка пакетов
 
 Содержимое каталога `debian`:
-1. `control` — это список пакетов и их настройки.
+1. `control` — содержит список пакетов и их настройки.
 1. `changelog` — это история изменений.
-1. `rules` — это исполняемый Makefile, используемый для сборки пакетов.
+1. `rules` — это исполняемый Makefile, управляющий сборкой.
    Минимальный `rules`:
    ```
    #!/usr/bin/make -f
@@ -1404,15 +1404,24 @@ Acquire::http:Proxy "http://⟨host⟩:⟨port⟩";
 Обновление оригинального пакета не заменит наши файлы.
 Удаление нашего пакета удалит эти файлы, т.е. оригинальный пакет будет де-факто сломанным (`aptitude reinstall` в помощь).
 
+Примеры применения профилей (build profiles):
+1. Включение/отключение сборки конкретного пакета:
+   ```
+   Build-Profiles: <astra>
+   ```
+1. Подключение/отключение зависимостей:
+   ```
+   Build-Depends: libkf5kjs-dev <!astra>, ...
+   Recommends: okular-csp-chm <!astra>, ...
+   ```
+
 Собрать пакеты из папки с исходниками (нужны пакеты `devscripts`, `build-essential`, `lintian`):
 ```
-$ debuild --no-tgz-check -d -us -uc
+$ debuild --no-tgz-check -us -uc
 ```
-
-Вывести последнюю версию в файле `debian/changelog`:
-```
-$ dpkg-parsechangelog --show-field Version
-```
+Примачения:
+1. `-d` позволяет игнорировать зависимости.
+1. Можно невозбранно задавать профили при помощи переменной окружения `DEB_BUILD_PROFILES`.
 
 Скачать из репозитория исходники и собрать пакет:
 1. Скачать исходники пакета:
@@ -1423,6 +1432,11 @@ $ dpkg-parsechangelog --show-field Version
 1. ```
    $ apt-get -b source ⟨package⟩
    ```
+
+Вывести последнюю версию в файле `debian/changelog`:
+```
+$ dpkg-parsechangelog --show-field Version
+```
 
 ### Патчинг c quilt
 
