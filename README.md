@@ -1421,7 +1421,7 @@ $ debuild --no-tgz-check -us -uc
 ```
 Примачения:
 1. `-d` позволяет игнорировать зависимости.
-1. Можно невозбранно задавать профили при помощи переменной окружения `DEB_BUILD_PROFILES`.
+1. `--build-profiles=⟨profiles⟩` позволяет невозбранно задавать профили.
 
 Скачать из репозитория исходники и собрать пакет:
 1. Скачать исходники пакета:
@@ -1432,6 +1432,12 @@ $ debuild --no-tgz-check -us -uc
 1. ```
    $ apt-get -b source ⟨package⟩
    ```
+
+Выпустить новую версию пакета с `gbp` (без пересборки):
+```
+$ gbp dch --upstream-branch=main --debian-branch=debian --release --commit
+$ gbp buildpackage --git-tag-only --git-upstream-branch=main --git-debian-branch=debian
+```
 
 Вывести последнюю версию в файле `debian/changelog`:
 ```
