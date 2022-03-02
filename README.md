@@ -1177,6 +1177,16 @@ alias grep='grep --color=auto'
 
 # Криптография и безопасность
 
+Вывести список ключей:
+```
+$ gpg --list-keys
+```
+
+Создать ключ:
+```
+$ gpg --full-generate-key
+```
+
 Экспортировать публичный ключ в виде key-файла:
 ```
 $ gpg --armor --output ⟨output key file⟩ --export ⟨id⟩
