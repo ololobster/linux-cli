@@ -1029,6 +1029,17 @@ $ locale -a
 # timedatectl set-timezone 'Europe/Moscow'
 ```
 
+Вывести список доступных шрифтов:
+```
+$ fc-list
+```
+
+Обновить кеш шрифтов:
+```
+$ fc-cache -f -v
+```
+Примечение: можно кидать шрифты в `~/.local/share/fonts`.
+
 # Службы systemd
 
 Где лежат конфиги сервисов:
