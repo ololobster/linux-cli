@@ -1497,6 +1497,7 @@ $ dpkg-parsechangelog --show-field Version
 $ quilt push -a
 $ quilt pop -a
 ```
+Примечание: можно указать каталог с патчами при помощи `QUILT_PATCHES`.
 
 Создать патч:
 1. ```
