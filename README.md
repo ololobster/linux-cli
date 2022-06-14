@@ -1380,6 +1380,17 @@ $ aptitude search '^corosync$' -F '%V'
 # apt-mark manual ⟨package⟩
 ```
 
+Поставить пакет на hold (запретить обновление) и снять:
+```
+# apt-mark hold ⟨package⟩
+# apt-mark unhold ⟨package⟩
+```
+
+Вывести список пакетов, поставлекнных на hold:
+```
+# apt-mark showhold
+```
+
 Удалить скачанные deb-пакеты (лежат в `/var/cache/apt/archives`):
 ```
 # apt-get clean
