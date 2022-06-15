@@ -51,7 +51,8 @@
    [gdb](#gdb)
 1. [Скрипты на Bash](#скрипты-на-bash):
    [функции](#функции),
-   [блок if-elif-else-fi](#блок-if-elif-else-fi),
+   [блок if](#блок-if),
+   [блок switch](#блок-switch),
    [циклы](#циклы)
 1. [Прочее](#прочее):
    [youtube-dl](#youtube-dl),
@@ -1796,12 +1797,21 @@ rc=$?
 echo "$rc $output"
 ```
 
-### Блок if-elif-else-fi
+### Блок if
+
+В общем случае:
+```
+if ⟨command⟩
+then
+    echo 'return code == 0'
+else
+    echo 'return code != 0'
+fi
+```
 
 Для строк есть `==` и `!=`.
 Для чисел есть `-eq`, `-ne`, `-lt` (меньше), `-gt` (больше), `-le` и `-ge`.
-
-Работа с числами:
+Пример:
 ```
 var=11
 if [ $var -eq 10 ]
@@ -1834,14 +1844,21 @@ fi
 
 Отрицание: `[ ! EXPR ]`.
 
-Проверка при помощи выполнения какой-либо команды:
+### Блок switch
+
 ```
-if ⟨command⟩
-then
-    echo 'return code == 0'
-else
-    echo 'return code != 0'
-fi
+var=11
+case "${var}" in
+    10)
+        echo "10"
+        ;;
+    11 | 12 | 13)
+        echo "11 | 12 | 13"
+        ;;
+    *)
+        echo "ХЗ"
+        ;;
+esac
 ```
 
 ### Циклы
