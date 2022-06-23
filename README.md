@@ -25,6 +25,7 @@
    [vim](#vim)
 1. [Сеть](#сеть):
    [interfaces](#настройка-интерфейсов-посредством-etcnetworkinterfaces),
+   [NetworkManager](#networkmanager),
    [systemd-networkd](#настройка-интерфейсов-посредством-systemd-networkd)
 1. [Пользователи](#пользователи):
    [sudo и su](#sudo-и-su),
@@ -891,11 +892,6 @@ $ traceroute ⟨host⟩
 ```
 Удобно смотреть воткнут ли кабель в разъём.
 
-Вывести все сетевые устройства и их состояние с т.з. NetworkManager:
-```
-$ nmcli d
-```
-
 ### Настройка интерфейсов посредством /etc/network/interfaces
 
 Пример интерфейса с DHCP:
@@ -915,6 +911,23 @@ iface eth0 inet static
 
 Если не задать `netmask`, то система не выдаст ошибку, а попробует подобрать маску самостоятельно.
 Но делать так НЕ надо, надо задавать.
+
+### NetworkManager
+
+Вывести список устройств/соединений:
+```
+$ nmcli device status
+$ nmcli connection show
+```
+
+NetworkManager не будет управлять устройствами, которые настраиваются через `/etc/network/interfaces`.
+Также можно задать игнорируемые устройства в конфиге.
+Пример:
+```
+$ cat /etc/NetworkManager/conf.d/99-unmanaged-devices.conf
+[keyfile]
+unmanaged-devices=interface-name:eth1;interface-name:eth2
+```
 
 ### Настройка интерфейсов посредством systemd-networkd
 
