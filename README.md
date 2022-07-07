@@ -24,9 +24,10 @@
    [sed](#sed),
    [vim](#vim)
 1. [Сеть](#сеть):
-   [interfaces](#настройка-интерфейсов-посредством-etcnetworkinterfaces),
+   [interfaces](#настройка-интерфейсов-с-etcnetworkinterfaces),
    [NetworkManager](#networkmanager),
-   [systemd-networkd](#настройка-интерфейсов-посредством-systemd-networkd)
+   [systemd-networkd](#настройка-интерфейсов-с-systemd-networkd),
+   [curl](#curl)
 1. [Пользователи](#пользователи):
    [sudo и su](#sudo-и-su),
    [локаль](#локаль)
@@ -850,11 +851,6 @@ $ nmap ⟨host⟩ -p ⟨port⟩
 # route del -net 10.1.1.0/24 gw 10.10.0.1
 ```
 
-Отправить POST-запрос:
-```
-$ curl -d "⟨data⟩" -X POST ⟨url⟩
-```
-
 Вывести правила брандмауэра netfilter:
 ```
 # iptables --list
@@ -892,7 +888,7 @@ $ traceroute ⟨host⟩
 ```
 Удобно смотреть воткнут ли кабель в разъём.
 
-### Настройка интерфейсов посредством /etc/network/interfaces
+### Настройка интерфейсов с /etc/network/interfaces
 
 Пример интерфейса с DHCP:
 ```
@@ -929,7 +925,7 @@ $ cat /etc/NetworkManager/conf.d/99-unmanaged-devices.conf
 unmanaged-devices=interface-name:eth1;interface-name:eth2
 ```
 
-### Настройка интерфейсов посредством systemd-networkd
+### Настройка интерфейсов с systemd-networkd
 
 Правило представляет собой файл с расширением `.network` или `.link`, лежащий в `/etc/systemd/network`.
 Пример: `10-persistent-net.link`.
@@ -977,6 +973,31 @@ Unmanaged=yes
 ```
 
 А ещё можно использовать `*`, например, `Name=en*`.
+
+### curl
+
+Закачать что-нибудь:
+```
+$ curl --output ⟨path⟩ ⟨url⟩
+```
+Примечания:
+1. `--output` ака `-o` — это именно новый файл, НЕ каталог.
+   В качестве альтернативы есть `--remote-name` ака `-O` (оставить оригинальное имя файла) и `--output-dir` (по умолчанию текущий каталог).
+
+Отправить простой POST-запрос (`application/x-www-form-urlencoded`):
+```
+$ curl -d 'email=test@test.com&password=test' -X POST ⟨url⟩
+```
+Отправить простой POST-запрос с данными из локального файла:
+```
+$ curl -d '@data.txt' -X POST ⟨url⟩
+```
+Отправить POST-запрос с JSON:
+```
+$ curl -d '{"key1":"value1", "key2":"value2"}' -H 'Content-Type: application/json' -X POST ⟨url⟩
+```
+Примечания:
+1. Для бинарных данных следует использовать не `--data` ака `-d`, а `--data-binary`.
 
 ### DNS
 
