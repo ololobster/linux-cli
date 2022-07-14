@@ -1470,13 +1470,20 @@ deb ⟨repo location⟩ ⟨distribution⟩ ⟨component1⟩ ⟨component2⟩ ⟨
 
 Добавить публичный ключ репозитория (нужен пакет `gnupg`):
 ```
-$ wget -O- ⟨URL⟩ | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/⟨some name⟩.gpg
+$ wget -O- ⟨URL⟩ | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/⟨name⟩.gpg
 ```
 
 Для использования прокси добавляем в `/etc/apt/apt.conf`:
 ```
 Acquire::http:Proxy "http://⟨host⟩:⟨port⟩";
 ```
+
+Построить корневую ФС на примере Debian Bullseye:
+```
+# debootstrap --arch amd64 bullseye ⟨path⟩ http://ftp.se.debian.org/debian
+```
+Примечания:
+1. `mmdebstrap` — это альтернатива `debootstrap`, которая может работать без прав суперпользователя.
 
 ### Сборка пакетов
 
@@ -1621,6 +1628,17 @@ $ rpmspec -q --srpm --qf "%{version}" ⟨spec file⟩
 Распаковать RPM-архив в текущий каталог:
 ```
 $ rpm2cpio ⟨rpm file⟩ | cpio -idmv
+```
+
+Скопировать реп (нужен пакет `dnf-utils`):
+```
+$ reposync --newest-only --delete --norepopath --repoid=⟨repo id⟩ -p ⟨path⟩
+```
+
+Построить корневую ФС на примере Fedora 36:
+```
+$ curl -O https://raw.githubusercontent.com/hercules-team/augeas/master/tests/root/etc/yum.repos.d/fedora.repo
+# dnf install -y --nogpgcheck --config=./fedora.repo --releasever=36 --installroot=⟨path⟩ fedora-release systemd util-linux rootfiles
 ```
 
 # Ядро, модули ядра
