@@ -1046,7 +1046,7 @@ su ⟨user⟩
 ```
 sudo ⟨command⟩
 ```
-При этом возможно потребуется ввести собственный пароль.
+При этом, возможно, потребуется ввести собственный пароль.
 Флаг `-E` ака `--preserve-env` позволяет оставить свои переменные окружения.
 
 Право использовать `sudo` выдаётся через `/etc/sudoers`:
@@ -2025,18 +2025,6 @@ $ echo $$
 $ ⟨var⟩=`⟨command⟩`
 ```
 
-Установить KDE на голую систему:
-1. ```
-   # aptitude install task-kde-desktop
-   ```
-1. Перезагрузить.
-
-Установить Gnome на голую систему:
-1. ```
-   # aptitude install task-gnome-desktop
-   ```
-1. Перезагрузить.
-
 Для корректной работы Bluetooth-устройств, связанных с аудио, нужен `pulseaudio-module-bluetooth`:
 1. ```
    # aptitude install pulseaudio-module-bluetooth
@@ -2060,10 +2048,10 @@ $ find . -name '*.sh' | xargs rm -f
 
 ### youtube-dl
 
-`youtube-dl` из пакетов обычно бесполезен.
+`youtube-dl` из пакетов ОС обычно бесполезен.
 Надо ставить pipкой самый свежий:
 ```
-# pip install youtube-dl
+$ pip3 install youtube-dl
 ```
 
 Скачать видео в 720p:
@@ -2078,6 +2066,8 @@ $ youtube-dl -f 'bestvideo[height=720][ext=mp4]+bestaudio[ext=m4a]' ⟨url⟩
 ```
 $ youtube-dl -x --audio-format mp3 ⟨url⟩
 ```
+
+`yt-dlp` — это форк с поддержкой многопоточности, аргументы те же.
 
 ### Манипуляции с документами
 
