@@ -714,6 +714,11 @@ $ find /var/www/ -type f -name 'access.log*' -exec du -k {} \; | awk '{s+=$1}END
 $ cat ⟨file⟩ | wc -l
 ```
 
+Покромсать строку по символу-разделителю:
+```
+$ echo '12.11.70.19~rc1' | cut -d '~' -f 1
+```
+
 Сравнение папок при помощи пакета `diffoscope`:
 ```
 $ diffoscope --html=log.html --exclude-directory-metadata=yes --max-page-size=15000000 --max-page-diff-block-lines=5000 --no-default-limits ⟨path 1⟩ ⟨path 2⟩
