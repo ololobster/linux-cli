@@ -1926,10 +1926,18 @@ fi
    [ ! -f /etc/resolv.conf ]
    ```
 
-Поскольку выражение в скобках отдаёт код возврата, то можно делать так:
-```
-[ -f /etc/resolv.conf ] || echo "fail"
-```
+Поскольку выражения в скобках отдают код возврата, то можно делать:
+1. Сложные условия:
+   ```
+   if [ -d /etc/X11 ] && [ -f /usr/bin/Xorg ]
+   then
+       ...
+   fi
+   ```
+1. Простые проверки без блока `if`:
+   ```
+   [ -f /etc/resolv.conf ] || exit 1
+   ```
 
 См. также:
 1. [Introduction to if](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_07_01.html)
