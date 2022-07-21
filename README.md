@@ -2115,6 +2115,11 @@ $ convert -compress jpeg -quality 50 ⟨directory⟩/*.jpg ⟨output TIF⟩
 $ convert ⟨input TIF⟩ %d.tif
 ```
 
+Перегнать svg в png/pdf/eps (нужен пакет `librsvg2-bin`):
+```
+$ rsvg-convert --format=png --output=test.png test.svg
+```
+
 Вывести инфу по изображению (нужен пакет `imagemagick`):
 ```
 $ identify -verbose ⟨path⟩
