@@ -382,7 +382,7 @@ $ ls -l /dev/disk/by-uuid
 
 Записать загрузочный USB (указывать диск, например, `/dev/sdb`):
 ```
-# dd bs=4M if=⟨iso file⟩ of=⟨device⟩ conv=fdatasync
+# dd bs=4M if=in.iso of=⟨device⟩ conv=fdatasync
 ```
 
 Начать работу с `parted` в интерактивном режиме (указывать диск, например, `/dev/sdc`):
@@ -439,7 +439,7 @@ $ lslocks
 ```
 Монтировать ISO-файл:
 ```
-# mount -o loop ⟨iso file⟩ ⟨mount point⟩
+# mount -o loop in.iso ⟨mount point⟩
 ```
 
 Чтобы диск монтировался автоматом, надо добавить соответствующую запись в `/etc/fstab`:
@@ -582,32 +582,30 @@ $ scp ⟨source⟩ ⟨target directory⟩
 
 Распаковать `tar.gz`:
 ```
-$ tar -xf ./in.tar.gz
+$ tar -xf in.tar.gz
 ```
 Вынуть один файл из `tar.gz`:
 ```
-$ tar -zxf ./in.tar.gz ⟨file to extract⟩
+$ tar -zxf in.tar.gz ⟨file to extract⟩
 ```
 Примечание: `--directory` ака `-C` задаёт каталог для записи.
 
 Вывести список файлов, запакованных в `tar.gz`:
 ```
-$ tar -ztf ./in.tar.gz
+$ tar -ztf in.tar.gz
 ```
 
 Запаковать файл или каталог в `tar.gz`:
 ```
-$ tar -zcf ./out.tar.gz ⟨file or directory⟩
+$ tar -zcf out.tar.gz ⟨file or directory⟩
+```
+Запаковать всё содержимое текущего каталога в `tar.gz`:
+```
+$ tar -zcvf out.tar.gz .
 ```
 Примечания:
 1. Можно указать сразу много файлов и каталогов.
 1. `tar` нормально пакует символьные ссылки.
-
-Запаковать всё содержимое каталога, но не класть в архив сам родительский каталог:
-```
-$ cd ⟨target directory⟩
-$ tar -zcvf ./out.tar.gz .
-```
 
 Запаковать и отправить по SSH без создания файла на локальной ЭВМ:
 ```
@@ -616,32 +614,32 @@ $ tar -zcvf - --one-file-system ⟨file or directory⟩ | ssh ⟨login⟩@⟨hos
 
 Распаковать `zip` (2 способа):
 ```
-$ unzip ./in.zip
-$ 7z x ./in.zip
+$ unzip in.zip
+$ 7z x in.zip
 ```
 
 Запаковать каталог в `zip`:
 ```
-$ zip -r ./in.zip ⟨directory⟩
+$ zip -r out.zip ⟨directory⟩
 ```
 Можно указывать сразу много файлов и папок.
 Для файлов `-r` не нужен.
 
 Распаковать `rar`:
 ```
-$ unrar e ./in.rar
+$ unrar e in.rar
 ```
 
 Запаковать файл или папку в `rar`:
 ```
-$ rar a ./out.rar ⟨file or directory⟩
+$ rar a out.rar ⟨file or directory⟩
 ```
 Можно указать сразу много файлов и папок.
 Чтобы поставить пароль на архив используем `-p`.
 
 Распаковать `xz` (нужен пакет `xz-utils`):
 ```
-$ unxz ./in.xz
+$ unxz in.xz
 ```
 
 ### Права
@@ -729,7 +727,7 @@ $ diffoscope --html=log.html --exclude-directory-metadata=yes --max-page-size=15
 
 Выполнить XSLT-преобразование:
 ```
-$ xalan -xsl ⟨xsl-файл⟩ -in ⟨входной xml-файл⟩ -out ⟨output file⟩
+$ xalan -xsl in.xsl -in in.xml -out out.xml
 ```
 `xsltproc` — это глючная дрянь, не работают ни `xalan:indent-amount` ни `saxon:indent-spaces`.
 
@@ -1122,7 +1120,7 @@ $ fc-cache -f -v
 
 Получить статистику запуска сервисов:
 ```
-$ systemd-analyze plot > stat.svg
+$ systemd-analyze plot > out.svg
 ```
 
 ### Создание службы
@@ -1275,7 +1273,7 @@ $ openssl x509 -in ⟨cert⟩ -dates
 ```
 $ openssl genrsa -des3 -out myCA.key 2048
 $ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 1825 -out myCA.pem
-$ openssl pkcs12 -inkey myCA.key -in myCA.pem -export -out myCA.pfx
+$ openssl pkcs12 -inkey myCA.key -in myCA.pem -export -out out.pfx
 ```
 
 Поучить билет Kerberos:
@@ -1340,7 +1338,7 @@ $ /opt/cprocsp/bin/amd64/certmgr -list -store umy
 
 Закинуть сертификат в корневое хранилище:
 ```
-# /opt/cprocsp/bin/amd64/certmgr -inst -store mRoot -file ./in.cer
+# /opt/cprocsp/bin/amd64/certmgr -inst -store mRoot -file in.cer
 ```
 
 ### Astra Linux
@@ -1493,7 +1491,7 @@ $ aptitude search '^corosync$' -F '%V'
 
 Установить пакет из файла:
 ```
-# dpkg -i ⟨deb file⟩
+# dpkg -i in.deb
 ```
 Примечания:
 1. Осторожно! Оно не проверяет зависимости до начала установки.
@@ -1504,7 +1502,7 @@ $ aptitude search '^corosync$' -F '%V'
 
 Распаковать deb-файл:
 ```
-$ dpkg -x ⟨deb file⟩ ⟨target directory⟩
+$ dpkg -x in.deb ⟨target directory⟩
 ```
 
 Расшифровки интерфейса `aptitude`: `p` = пакет не установлен, `i` = установлен, `v` = виртуальный, `A` = установлен автоматически.
@@ -1660,31 +1658,31 @@ $ yumdownloader --source ⟨package⟩
 
 Собрать RPM-пакеты из `src.rpm`:
 ```
-$ rpmbuild --rebuild ⟨src.rpm file⟩
+$ rpmbuild --rebuild in.src.rpm
 ```
 
 Собрать RPM-пакеты по SPEC-файлу:
 1. Скачать исходники (нужен пакет `rpmdevtools`):
    ```
-   $ spectool -g -R ⟨spec file⟩
+   $ spectool -g -R in.spec
    ```
 1. Собрать RPM-пакеты (нужен пакет `rpm-build`):
    ```
-   $ rpmbuild -bb ⟨spec file⟩
+   $ rpmbuild -bb in.spec
    ```
    Примечание: если нужен пакет `src.rpm`, то использовать `-ba`.
 
 Вывести бинарные пакеты, определённые в spec-файле:
 ```
-$ rpmspec --query ⟨spec file⟩
+$ rpmspec --query in.spec
 ```
 Вывести бинарные пакеты, определённые в spec-файле, в заданном формате:
 ```
-$ rpmspec --query --qf '%{name}: %{version} %{release}\n' ⟨spec file⟩
+$ rpmspec --query --qf '%{name}: %{version} %{release}\n' in.spec
 ```
 Вывести версию пакетов:
 ```
-$ rpmspec --srpm --query --qf '%{version}' ⟨spec file⟩
+$ rpmspec --srpm --query --qf '%{version}' in.spec
 ```
 Примечения:
 1. Флаг `--rpms` повелевает работать с бинарными пакетами, определёнными в spec-файле (по умолчанию).
@@ -1692,7 +1690,7 @@ $ rpmspec --srpm --query --qf '%{version}' ⟨spec file⟩
 
 Распаковать RPM-архив в текущий каталог:
 ```
-$ rpm2cpio ⟨rpm file⟩ | cpio -idmv
+$ rpm2cpio in.rpm | cpio -idmv
 ```
 
 Скопировать реп (нужен пакет `dnf-utils`):
@@ -1703,7 +1701,7 @@ $ reposync --newest-only --delete --norepopath --repoid=⟨repo id⟩ -p ⟨path
 Построить корневую ФС на примере Fedora 36:
 ```
 $ curl -O https://raw.githubusercontent.com/hercules-team/augeas/master/tests/root/etc/yum.repos.d/fedora.repo
-# dnf install -y --nogpgcheck --config=./fedora.repo --releasever=36 --installroot=⟨path⟩ fedora-release systemd util-linux rootfiles
+# dnf install -y --nogpgcheck --config=fedora.repo --releasever=36 --installroot=⟨path⟩ fedora-release systemd util-linux rootfiles
 ```
 
 # Ядро, модули ядра
@@ -2158,12 +2156,12 @@ $ convert -compress jpeg -quality 50 ⟨directory⟩/*.jpg ⟨output TIF⟩
 
 Распилить многостраничный TIF на отдельные картинки:
 ```
-$ convert ⟨input TIF⟩ %d.tif
+$ convert in.tif %d.tif
 ```
 
 Перегнать svg в png/pdf/eps (нужен пакет `librsvg2-bin`):
 ```
-$ rsvg-convert --format=png --output=./out.png ./in.svg
+$ rsvg-convert --format=png --output=out.png in.svg
 ```
 
 Вывести инфу по изображению (нужен пакет `imagemagick`):
@@ -2178,15 +2176,15 @@ $ pngcheck ⟨PNG file⟩
 
 Сгенерировать PDF-файл без сжатия:
 ```
-$ qpdf --qdf --object-streams=disable --stream-data=uncompress --generate-appearances ./in.pdf ./out.pdf
+$ qpdf --qdf --object-streams=disable --stream-data=uncompress --generate-appearances in.pdf out.pdf
 ```
 
 Снять пароль с PDF-файла:
 ```
-$ qpdf --decrypt --password=⟨password⟩ ./in.pdf ./out.pdf
+$ qpdf --decrypt --password=⟨password⟩ in.pdf out.pdf
 ```
 
 Поставить пароль на PDF-файл (AES 256 бит):
 ```
-$ qpdf --encrypt ⟨user password⟩ ⟨owner password⟩ 256 -- ./in.pdf ./out.pdf
+$ qpdf --encrypt ⟨user password⟩ ⟨owner password⟩ 256 -- in.pdf out.pdf
 ```
