@@ -38,6 +38,7 @@
 1. [Криптография и безопасность](#криптография-и-безопасность):
    [контрольные суммы](#контрольные-суммы),
    [gpg](#gpg),
+   [КриптоПро](#криптопро),
    [Astra Linux](#astra-linux),
    [пакет ldap-utils](#пакет-ldap-utils)
 1. [Исполняемые файлы и библиотеки](#исполняемые-файлы-и-библиотеки)
@@ -581,22 +582,22 @@ $ scp ⟨source⟩ ⟨target directory⟩
 
 Распаковать `tar.gz`:
 ```
-$ tar -xf ⟨tar.gz file⟩
+$ tar -xf ./in.tar.gz
 ```
 Вынуть один файл из `tar.gz`:
 ```
-$ tar -zxf ⟨tar.gz file⟩ ⟨file to extract⟩
+$ tar -zxf ./in.tar.gz ⟨file to extract⟩
 ```
 Примечание: `--directory` ака `-C` задаёт каталог для записи.
 
 Вывести список файлов, запакованных в `tar.gz`:
 ```
-$ tar -ztf ⟨tar.gz file⟩
+$ tar -ztf ./in.tar.gz
 ```
 
 Запаковать файл или каталог в `tar.gz`:
 ```
-$ tar -zcf ⟨new tar.gz file⟩ ⟨file or directory⟩
+$ tar -zcf ./out.tar.gz ⟨file or directory⟩
 ```
 Примечания:
 1. Можно указать сразу много файлов и каталогов.
@@ -605,7 +606,7 @@ $ tar -zcf ⟨new tar.gz file⟩ ⟨file or directory⟩
 Запаковать всё содержимое каталога, но не класть в архив сам родительский каталог:
 ```
 $ cd ⟨target directory⟩
-$ tar -zcvf ⟨new tar.gz file⟩ .
+$ tar -zcvf ./out.tar.gz .
 ```
 
 Запаковать и отправить по SSH без создания файла на локальной ЭВМ:
@@ -615,32 +616,32 @@ $ tar -zcvf - --one-file-system ⟨file or directory⟩ | ssh ⟨login⟩@⟨hos
 
 Распаковать `zip` (2 способа):
 ```
-$ unzip ⟨zip file⟩
-$ 7z x ⟨zip file⟩
+$ unzip ./in.zip
+$ 7z x ./in.zip
 ```
 
-Запаковать папку в `zip`:
+Запаковать каталог в `zip`:
 ```
-$ zip -r ⟨zip file⟩ ⟨directory⟩
+$ zip -r ./in.zip ⟨directory⟩
 ```
 Можно указывать сразу много файлов и папок.
 Для файлов `-r` не нужен.
 
 Распаковать `rar`:
 ```
-$ unrar e ⟨rar file⟩
+$ unrar e ./in.rar
 ```
 
 Запаковать файл или папку в `rar`:
 ```
-$ rar a ⟨new rar file⟩ ⟨file or directory⟩
+$ rar a ./out.rar ⟨file or directory⟩
 ```
 Можно указать сразу много файлов и папок.
 Чтобы поставить пароль на архив используем `-p`.
 
 Распаковать `xz` (нужен пакет `xz-utils`):
 ```
-$ unxz ⟨xz file⟩
+$ unxz ./in.xz
 ```
 
 ### Права
@@ -1328,6 +1329,18 @@ $ gpg --full-generate-key
 Экспортировать публичный ключ в виде key-файла:
 ```
 $ gpg --armor --output ⟨output key file⟩ --export ⟨id⟩
+```
+
+### КриптоПро
+
+Вывести мои сертификаты:
+```
+$ /opt/cprocsp/bin/amd64/certmgr -list -store umy
+```
+
+Закинуть сертификат в корневое хранилище:
+```
+# /opt/cprocsp/bin/amd64/certmgr -inst -store mRoot -file ./in.cer
 ```
 
 ### Astra Linux
@@ -2150,7 +2163,7 @@ $ convert ⟨input TIF⟩ %d.tif
 
 Перегнать svg в png/pdf/eps (нужен пакет `librsvg2-bin`):
 ```
-$ rsvg-convert --format=png --output=out.png in.svg
+$ rsvg-convert --format=png --output=./out.png ./in.svg
 ```
 
 Вывести инфу по изображению (нужен пакет `imagemagick`):
@@ -2165,15 +2178,15 @@ $ pngcheck ⟨PNG file⟩
 
 Сгенерировать PDF-файл без сжатия:
 ```
-$ qpdf --qdf --object-streams=disable --stream-data=uncompress --generate-appearances ⟨input PDF⟩ ⟨output PDF⟩
+$ qpdf --qdf --object-streams=disable --stream-data=uncompress --generate-appearances ./in.pdf ./out.pdf
 ```
 
 Снять пароль с PDF-файла:
 ```
-$ qpdf --decrypt --password=⟨password⟩ ⟨input PDF⟩ ⟨output PDF⟩
+$ qpdf --decrypt --password=⟨password⟩ ./in.pdf ./out.pdf
 ```
 
 Поставить пароль на PDF-файл (AES 256 бит):
 ```
-$ qpdf --encrypt ⟨user password⟩ ⟨owner password⟩ 256 -- ⟨input PDF⟩ ⟨output PDF⟩
+$ qpdf --encrypt ⟨user password⟩ ⟨owner password⟩ 256 -- ./in.pdf ./out.pdf
 ```
