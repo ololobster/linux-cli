@@ -1331,14 +1331,34 @@ $ gpg --armor --output ⟨output key file⟩ --export ⟨id⟩
 
 ### КриптоПро
 
-Вывести мои сертификаты:
+Вывести сертификаты в личном хранилище:
 ```
-$ /opt/cprocsp/bin/amd64/certmgr -list -store umy
+$ /opt/cprocsp/bin/amd64/certmgr -list -store uMy
+```
+Примечание: корневое хранилище — `mRoot`.
+
+Закинуть сертификат и ключи (в виде PFX-файла) в личное хранилище:
+```
+$ /opt/cprocsp/bin/amd64/certmgr -install -store uMy -pfx -file in.pfx -pin ⟨password⟩
 ```
 
 Закинуть сертификат в корневое хранилище:
 ```
-# /opt/cprocsp/bin/amd64/certmgr -inst -store mRoot -file in.cer
+# /opt/cprocsp/bin/amd64/certmgr -install -store mRoot -file in.cer
+```
+
+Импортировать CRL для личного использования:
+```
+$ /opt/cprocsp/bin/amd64/certmgr -install -store uCA -crl -file in.crl
+```
+
+Создать простую подпись CAdES-BES:
+```
+$ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -der -detached -addchain in.pdf out.sig
+```
+Создать усовершенствованную подпись CAdES-X Long Type 1:
+```
+$ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -der -detached -addchain -xlongtype1 -cadesTSA ⟨TSP server⟩ in.pdf out.sig
 ```
 
 ### Astra Linux
