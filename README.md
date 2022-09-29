@@ -1429,6 +1429,11 @@ $ cat /sys/module/parsec/parameters/max_ilev
 # pdpl-ps ⟨pid⟩
 ```
 
+Вывести PARSEC-привилегии процесса:
+```
+# pscaps ⟨pid⟩
+```
+
 **ФС в AstraLinux**
 
 Флаги:
@@ -1452,7 +1457,7 @@ $ pdp-ls -M ⟨path⟩
 1. Флаги перечисляются через запятую.
 1. `-R` для рекурсивного изменения.
 
-** ALD (Astra Linux Directory) **
+**ALD (Astra Linux Directory)**
 
 Домен безопасности (security domain) – это часть автоматизированной системы, которая использует одни и те же политики безопасности.
 
