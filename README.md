@@ -1367,13 +1367,17 @@ $ /opt/cprocsp/bin/amd64/certmgr -install -store uMy -pfx -file in.pfx -pin ⟨p
 $ /opt/cprocsp/bin/amd64/certmgr -install -store uCA -crl -file in.crl
 ```
 
-Создать простую подпись CAdES-BES:
+Создать простую отсоединенную подпись формата CAdES-BES:
 ```
 $ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -der -detached -addchain in.pdf out.sig
 ```
-Создать усовершенствованную подпись CAdES-X Long Type 1:
+Примечания:
+1. Для использования формата CAdES-X Long Type 1: `-xlongtype1 -cadesTSA ⟨TSP server⟩`.
+1. Для использования формата CAdES-T: `-cadest -cadesTSA ⟨TSP server⟩`.
+
+Проверить отсоединенную подпись:
 ```
-$ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -der -detached -addchain -xlongtype1 -cadesTSA ⟨TSP server⟩ in.pdf out.sig
+$ /opt/cprocsp/bin/amd64/cryptcp -verify -detach in.pdf out.sig -verall
 ```
 
 ### Astra Linux
