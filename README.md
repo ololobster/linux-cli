@@ -2295,6 +2295,15 @@ $ convert in.tif %d.tif
 $ rsvg-convert --format=png --output=out.png in.svg
 ```
 
+Получить разницу между 2 изображениями в виде 3-го изображения (нужен пакет `imagemagick`):
+```
+$ compare -compose src in1.png in2.png out.png
+```
+Вывести количество отличающихся пикселей:
+```
+$ compare -metric AE in1.png in2.png out.png
+```
+
 Вывести инфу по изображению (нужен пакет `imagemagick`):
 ```
 $ identify -verbose ⟨path⟩
@@ -2315,7 +2324,8 @@ $ qpdf --qdf --object-streams=disable --stream-data=uncompress --generate-appear
 $ qpdf --decrypt --password=⟨password⟩ in.pdf out.pdf
 ```
 
-Поставить пароль на PDF-файл (AES 256 бит):
+Получить 1-ю страницу PDF-файла в виде изображения (нужен пакет `poppler-utils`):
 ```
-$ qpdf --encrypt ⟨user password⟩ ⟨owner password⟩ 256 -- in.pdf out.pdf
+$ pdftoppm -singlefile -f 1 -r 72 -png in.pdf out
 ```
+
