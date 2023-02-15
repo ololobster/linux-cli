@@ -1774,6 +1774,11 @@ $ rpm -qf ⟨path⟩
 $ rpm --import ⟨key file⟩
 ```
 
+Вывести переменные `basearch` и `releasever`, используемые в repo-файлах:
+```
+$ dnf config-manager --dump-variables
+```
+
 Скачать исходники пакета (файл `src.rpm`):
 ```
 $ yumdownloader --source ⟨package⟩
