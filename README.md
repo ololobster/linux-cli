@@ -42,11 +42,12 @@
    [Astra Linux](#astra-linux),
    [пакет ldap-utils](#пакет-ldap-utils)
 1. [Исполняемые файлы и библиотеки](#исполняемые-файлы-и-библиотеки)
-1. [Deb-пакеты](#deb-пакеты):
-   [репозитории](#репозитории),
-   [сборка пакетов](#сборка-пакетов),
+1. [DEB-пакеты](#deb-пакеты):
+   [репозитории](#репозитории)
+1. [Сборка DEB-пакетов](#сборка-deb-пакетов):
    [патчинг c quilt](#патчинг-c-quilt)
 1. [RPM-пакеты](#rpm-пакеты)
+1. [Сборка RPM-пакетов](#сборка-rpm-пакетов)
 1. [Ядро, модули ядра](#ядро-модули-ядра)
 1. [Разработка](#разработка):
    [pkg-config](#pkg-config),
@@ -1554,7 +1555,7 @@ $ addr2line -f -e okularGenerator_poppler.so 0x37e82
 ```
 Примечание: `-f` повелевает также вывести название функции.
 
-# Deb-пакеты
+# DEB-пакеты
 
 Вывести список установленных пакетов:
 ```
@@ -1661,7 +1662,7 @@ Acquire::http:Proxy "http://⟨host⟩:⟨port⟩";
 Примечания:
 1. `mmdebstrap` — это альтернатива `debootstrap`, которая может работать без прав суперпользователя.
 
-### Сборка пакетов
+# Сбока DEB-пакетов
 
 Содержимое каталога `debian`:
 1. `control` — содержит список пакетов и их настройки.
@@ -1780,6 +1781,24 @@ $ rpm --import ⟨key file⟩
 $ dnf config-manager --dump-variables
 ```
 
+Распаковать RPM-архив в текущий каталог:
+```
+$ rpm2cpio in.rpm | cpio -idmv
+```
+
+Скопировать реп (нужен пакет `dnf-utils`):
+```
+$ reposync --newest-only --delete --norepopath --repoid=⟨repo id⟩ -p ⟨path⟩
+```
+
+Построить корневую ФС на примере Fedora 36:
+```
+$ curl -O https://raw.githubusercontent.com/hercules-team/augeas/master/tests/root/etc/yum.repos.d/fedora.repo
+# dnf install -y --nogpgcheck --config=fedora.repo --releasever=36 --installroot=⟨path⟩ fedora-release systemd util-linux rootfiles
+```
+
+# Сборка RPM-пакетов
+
 Скачать исходники пакета (файл `src.rpm`):
 ```
 $ yumdownloader --source ⟨package⟩
@@ -1816,22 +1835,6 @@ $ rpmspec --srpm --query --qf '%{version}' in.spec
 Примечения:
 1. Флаг `--rpms` повелевает работать с бинарными пакетами, определёнными в spec-файле (по умолчанию).
    Флаг `--srpm` — с source-пакетом.
-
-Распаковать RPM-архив в текущий каталог:
-```
-$ rpm2cpio in.rpm | cpio -idmv
-```
-
-Скопировать реп (нужен пакет `dnf-utils`):
-```
-$ reposync --newest-only --delete --norepopath --repoid=⟨repo id⟩ -p ⟨path⟩
-```
-
-Построить корневую ФС на примере Fedora 36:
-```
-$ curl -O https://raw.githubusercontent.com/hercules-team/augeas/master/tests/root/etc/yum.repos.d/fedora.repo
-# dnf install -y --nogpgcheck --config=fedora.repo --releasever=36 --installroot=⟨path⟩ fedora-release systemd util-linux rootfiles
-```
 
 # Ядро, модули ядра
 
