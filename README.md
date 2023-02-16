@@ -52,7 +52,8 @@
    [pkg-config](#pkg-config),
    [Autotools](#autotools),
    [CMake](#cmake),
-   [gdb](#gdb)
+   [gdb](#gdb),
+   [Python](#python)
 1. [Скрипты на Bash](#скрипты-на-bash):
    [функции](#функции),
    [блок if](#блок-if),
@@ -2006,6 +2007,33 @@ show ⟨param⟩
 ```
 set ⟨param⟩ ⟨value⟩
 ```
+
+### Python
+
+Вывести список установленных пакетов:
+```
+$ pip list
+```
+
+Создать файл `requirements.txt`:
+```
+$ pip freeze --local > requirements.txt
+```
+
+Установить пакеты, указанные в `requirements.txt`:
+```
+$ pip install -r requirements.txt
+```
+
+Создать изолированное окружение `myenv` при помощи `venv`:
+```
+$ python -m venv myenv
+$ source myenv/bin/activate
+$ deactivate
+```
+Примечания:
+1. При работе в окружении используются `python` и `pip` из каталога `myenv/bin`.
+1. `venv` — это стандартный модуль, появившийся в 3.3, урезанная версия проекта `virtualenv`.
 
 # Скрипты на Bash
 
