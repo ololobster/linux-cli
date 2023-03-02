@@ -1014,17 +1014,22 @@ $ curl --output ⟨path⟩ ⟨url⟩
 1. `--output` ака `-o` — это именно новый файл, НЕ каталог.
    В качестве альтернативы есть `--remote-name` ака `-O` (оставить оригинальное имя файла) и `--output-dir` (по умолчанию текущий каталог).
 
+Вывести HTTP-заголовки:
+```
+$ curl --head ⟨url⟩
+```
+
 Отправить простой POST-запрос (`application/x-www-form-urlencoded`):
 ```
 $ curl -d 'email=test@test.com&password=test' -X POST ⟨url⟩
 ```
-Отправить простой POST-запрос с данными из локального файла:
+Отправить простой POST-запрос с данными из локального файла `in.txt`:
 ```
-$ curl -d '@data.txt' -X POST ⟨url⟩
+$ curl -d '@in.txt' -X POST ⟨url⟩
 ```
 Отправить POST-запрос с JSON:
 ```
-$ curl -d '{"key1":"value1", "key2":"value2"}' -H 'Content-Type: application/json' -X POST ⟨url⟩
+$ curl -d '{"test":1}' -H 'Content-Type: application/json' -X POST ⟨url⟩
 ```
 Примечания:
 1. Для бинарных данных следует использовать не `--data` ака `-d`, а `--data-binary`.
