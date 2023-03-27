@@ -746,6 +746,11 @@ $ echo '{"a": 1, "b": 2}' | jq .b
 2
 ```
 
+Подставить в строку переменные:
+```
+$ echo 'login=${LOGNAME}' | envsubst
+```
+
 Сравнение папок при помощи пакета `diffoscope`:
 ```
 $ diffoscope --html=log.html --exclude-directory-metadata=yes --max-page-size=15000000 --max-page-diff-block-lines=5000 --no-default-limits ⟨path 1⟩ ⟨path 2⟩
@@ -1646,6 +1651,13 @@ $ dpkg -x in.deb ⟨target directory⟩
 ```
 
 Расшифровки интерфейса `aptitude`: `p` = пакет не установлен, `i` = установлен, `v` = виртуальный, `A` = установлен автоматически.
+
+Скачать deb-файл (3 варианта):
+```
+$ apt download ⟨package⟩
+$ apt-get download ⟨package⟩
+$ aptitude download ⟨package⟩
+```
 
 ### Репозитории
 
