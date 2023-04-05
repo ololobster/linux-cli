@@ -1394,17 +1394,26 @@ $ /opt/cprocsp/bin/amd64/certmgr -install -store uMy -pfx -file in.pfx -pin ⟨p
 $ /opt/cprocsp/bin/amd64/certmgr -install -store uCA -crl -file in.crl
 ```
 
-Создать простую отсоединенную подпись формата CAdES-BES:
+Экспортировать сертификат без ключей (в виде CER-файла):
+```
+$ /opt/cprocsp/bin/amd64/certmgr -export -certificate -thumbprint ⟨sha1⟩ -dest out.cer
+```
+
+Создать отсоединенную ЭП для файла `in.pdf` (форматы CAdES-BES, CAdES-X Long Type 1 и CAdES-T):
 ```
 $ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -der -detached -addchain in.pdf out.sig
+$ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -xlongtype1 -cadesTSA ⟨TSP server⟩ -der -detached -addchain in.pdf out.sig
+$ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -cadest -cadesTSA ⟨TSP server⟩ -der -detached -addchain in.pdf out.sig
 ```
-Примечания:
-1. Для использования формата CAdES-X Long Type 1: `-xlongtype1 -cadesTSA ⟨TSP server⟩`.
-1. Для использования формата CAdES-T: `-cadest -cadesTSA ⟨TSP server⟩`.
 
-Проверить отсоединенную подпись:
+Проверить отсоединенную ЭП `in.sig`:
 ```
-$ /opt/cprocsp/bin/amd64/cryptcp -verify -detach in.pdf out.sig -verall
+$ /opt/cprocsp/bin/amd64/cryptcp -verify -detach in.pdf in.sig -verall
+```
+
+Проверить работоспособность OCSP-службы:
+```
+$ /opt/cprocsp/bin/amd64/ocsputil makeresp -u ⟨OCSP server⟩ in.cer
 ```
 
 ### Astra Linux
