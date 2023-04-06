@@ -1371,13 +1371,41 @@ $ gpg --full-generate-key
 $ gpg --armor --output ⟨output key file⟩ --export ⟨id⟩
 ```
 
+Создать ЭП для файла `in.txt`:
+```
+$ gpg --output out.sig --sign in.txt
+```
+Примечания:
+1. ЭП создаётся при помощи приватного ключа подписанта, проверяется при помощи соответствующего публичного ключа.
+1. SIG-файл содержит исходный подписанный файл.
+
+Проверить ЭП в файле `in.sig`:
+```
+$ gpg --verify in.sig
+```
+
+Проверить ЭП и вытащить подписанный файл:
+```
+$ gpg --output out.txt --decrypt in.sig
+```
+
+Создать отсоединённую ЭП для файла `in.txt`:
+```
+$ gpg --output out.sig --detach-sig in.txt
+```
+
+Проверить отсоединённую ЭП в файле `in.sig`:
+```
+$ gpg --verify in.sig in.txt
+```
+
 ### КриптоПро
 
-Вывести сертификаты в личном хранилище:
+Вывести сертификаты в `uMy` (личном хранилище) и `mRoot` (корневом хранилище):
 ```
 $ /opt/cprocsp/bin/amd64/certmgr -list -store uMy
+$ /opt/cprocsp/bin/amd64/certmgr -list -store mRoot
 ```
-Примечание: корневое хранилище — `mRoot`.
 
 Закинуть сертификат и ключи (в виде PFX-файла) в личное хранилище:
 ```
@@ -1399,14 +1427,14 @@ $ /opt/cprocsp/bin/amd64/certmgr -install -store uCA -crl -file in.crl
 $ /opt/cprocsp/bin/amd64/certmgr -export -certificate -thumbprint ⟨sha1⟩ -dest out.cer
 ```
 
-Создать отсоединенную ЭП для файла `in.pdf` (форматы CAdES-BES, CAdES-X Long Type 1 и CAdES-T):
+Создать отсоединённую ЭП для файла `in.pdf` (форматы CAdES-BES, CAdES-X Long Type 1 и CAdES-T):
 ```
 $ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -der -detached -addchain in.pdf out.sig
-$ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -xlongtype1 -cadesTSA ⟨TSP server⟩ -der -detached -addchain in.pdf out.sig
-$ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -cadest -cadesTSA ⟨TSP server⟩ -der -detached -addchain in.pdf out.sig
+$ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -der -detached -addchain -xlongtype1 -cadesTSA ⟨TSP server⟩ in.pdf out.sig
+$ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -der -detached -addchain -cadest -cadesTSA ⟨TSP server⟩ in.pdf out.sig
 ```
 
-Проверить отсоединенную ЭП `in.sig`:
+Проверить отсоединённую ЭП `in.sig`:
 ```
 $ /opt/cprocsp/bin/amd64/cryptcp -verify -detach in.pdf in.sig -verall
 ```
