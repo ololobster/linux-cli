@@ -1642,6 +1642,11 @@ $ dpkg -S ⟨path⟩
 $ apt-rdepends ⟨package⟩
 ```
 
+Вывести список пакетов, которые зависят от искомого:
+```
+$ apt-cache rdepends ⟨package⟩
+```
+
 Вывести версию конкретного пакета:
 ```
 $ aptitude search '^corosync$' -F '%V'
