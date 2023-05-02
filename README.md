@@ -1652,6 +1652,11 @@ $ apt-cache rdepends ⟨package⟩
 $ aptitude search '^corosync$' -F '%V'
 ```
 
+Вывести доступные версии пакета:
+```
+$ apt list -a ⟨package⟩
+```
+
 Выпилить установленные автоматически пакеты, которые больше не нужны:
 ```
 # sudo apt-get autoremove
