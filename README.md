@@ -2330,6 +2330,16 @@ $ date +'%d.%m.%Y %H:%M:%S'
 $ date +%s
 ```
 
+Запустить VNC-сервер для доступа к текущему дисплею:
+1. Задать пароль в `~/.vnc/passwd`:
+   ```
+   $ x11vnc -storepasswd
+   ```
+1. Запустить VNC-сервер:
+   ```
+   $ x11vnc -noxdamage -shared -dontdisconnect -many -noxfixes -rfbauth ~/.vnc/passwd
+   ```
+
 Если команда выполнилась с ошибкой, то выполнить другую:
 ```
 $ ⟨command 1⟩ || ⟨command 2⟩
