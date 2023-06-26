@@ -870,6 +870,11 @@ cdab
 # ifconfig ⟨interface⟩ down
 ```
 
+Удалить виртуальный интерфейс:
+```
+# ip link delete ⟨interface⟩
+```
+
 Вывести драйвер, используемый интерфейсом:
 ```
 $ readlink -f /sys/class/net/⟨interface⟩/device/driver
