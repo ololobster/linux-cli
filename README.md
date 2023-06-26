@@ -1452,6 +1452,13 @@ $ /opt/cprocsp/bin/amd64/cryptcp -verify -detach in.pdf in.sig -verall
 $ /opt/cprocsp/bin/amd64/ocsputil makeresp -u ⟨OCSP server⟩ in.cer
 ```
 
+Вывести инфу по лицензиям КриптоПро:
+```
+$ /opt/cprocsp/sbin/amd64/cpconfig -license -view
+$ /opt/cprocsp/bin/amd64/tsputil license
+$ /opt/cprocsp/bin/amd64/ocsputil license
+```
+
 ### Astra Linux
 
 Мандатная метка = метка безопасности = уровень конфиденциальности + набор категорий + уровень целостности.
