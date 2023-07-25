@@ -387,6 +387,11 @@ $ ls -l /dev/disk/by-uuid
 # dd bs=4M if=in.iso of=⟨device⟩ conv=fdatasync
 ```
 
+Создать ISO из каталога `in`:
+```
+$ genisoimage -o out.iso in
+```
+
 Начать работу с `parted` в интерактивном режиме (указывать диск, например, `/dev/sdc`):
 ```
 # parted ⟨disk device⟩
@@ -439,7 +444,7 @@ $ lslocks
 ```
 # mount -t ⟨type⟩ -o ⟨options⟩ ⟨device⟩ ⟨mount point⟩
 ```
-Монтировать ISO-файл:
+Монтировать ISO:
 ```
 # mount -o loop in.iso ⟨mount point⟩
 ```
