@@ -389,7 +389,7 @@ $ ls -l /dev/disk/by-uuid
 
 Создать ISO из каталога `in`:
 ```
-$ genisoimage -o out.iso in
+$ genisoimage -J -joliet-long -r -o out.iso in
 ```
 
 Начать работу с `parted` в интерактивном режиме (указывать диск, например, `/dev/sdc`):
@@ -1456,6 +1456,11 @@ $ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -der -detached -ad
 Проверить отсоединённую ЭП `in.sig`:
 ```
 $ /opt/cprocsp/bin/amd64/cryptcp -verify -detach in.pdf in.sig -verall
+```
+
+Проверить работоспособность TSP-службы:
+```
+$ /opt/cprocsp/bin/amd64/tsputil ms -u ⟨TSP server⟩ --cert-req -a 1.2.643.7.1.1.2.2 in.txt out.tsr
 ```
 
 Проверить работоспособность OCSP-службы:
