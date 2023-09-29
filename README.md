@@ -1468,6 +1468,15 @@ $ /opt/cprocsp/bin/amd64/tsputil ms -u ⟨TSP server⟩ --cert-req -a 1.2.643.7.
 $ /opt/cprocsp/bin/amd64/ocsputil makeresp -u ⟨OCSP server⟩ in.cer
 ```
 
+Вывести конкретную групповую политику:
+```
+$ /opt/cprocsp/sbin/amd64/cpconfig -ini '\config\cades\ocsppolicy\DefaultOCSPURL' -view
+```
+Задать групповую политику:
+```
+# /opt/cprocsp/sbin/amd64/cpconfig -ini '\config\cades\ocsppolicy' -add string DefaultOCSPURL http://xxx.ru/ocsp.srf
+```
+
 Вывести инфу по лицензиям КриптоПро:
 ```
 $ /opt/cprocsp/sbin/amd64/cpconfig -license -view
