@@ -1426,24 +1426,29 @@ $ /opt/cprocsp/bin/amd64/certmgr -list -store uMy
 $ /opt/cprocsp/bin/amd64/certmgr -list -store mRoot
 ```
 
-Закинуть сертификат и ключи (в виде PFX-файла) в личное хранилище:
+Импортировать сертификат и ключ (в виде PFX-файла) в личное хранилище:
 ```
 $ /opt/cprocsp/bin/amd64/certmgr -install -store uMy -pfx -file in.pfx -pin ⟨password⟩
 ```
 
-Закинуть сертификат в корневое хранилище:
+Импортировать сертификат в корневое хранилище:
 ```
 # /opt/cprocsp/bin/amd64/certmgr -install -store mRoot -file in.cer
 ```
 
-Импортировать CRL для личного использования:
+Импортировать CRL в личное хранилище:
 ```
 $ /opt/cprocsp/bin/amd64/certmgr -install -store uCA -crl -file in.crl
 ```
 
-Экспортировать сертификат без ключей (в виде CER-файла):
+Экспортировать сертификат без ключа (в виде CER-файла):
 ```
 $ /opt/cprocsp/bin/amd64/certmgr -export -certificate -thumbprint ⟨sha1⟩ -dest out.cer
+```
+
+Экспортировать сертификат с ключом (в виде PFX-файла):
+```
+$ /opt/cprocsp/bin/amd64/certmgr -export -pfx -thumbprint ⟨sha1⟩ -dest out.pfx
 ```
 
 Создать отсоединённую ЭП для файла `in.pdf` (форматы CAdES-BES, CAdES-X Long Type 1 и CAdES-T):
@@ -1482,6 +1487,11 @@ $ /opt/cprocsp/sbin/amd64/cpconfig -ini '\config\cades\ocsppolicy\DefaultOCSPURL
 $ /opt/cprocsp/sbin/amd64/cpconfig -license -view
 $ /opt/cprocsp/bin/amd64/tsputil license
 $ /opt/cprocsp/bin/amd64/ocsputil license
+```
+
+Вывести инфу по КриптоПро:
+```
+$ /opt/cprocsp/bin/amd64/csptestf -enum -info
 ```
 
 ### Astra Linux
