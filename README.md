@@ -1441,6 +1441,11 @@ $ /opt/cprocsp/bin/amd64/certmgr -install -store uMy -pfx -file in.pfx -pin ⟨p
 $ /opt/cprocsp/bin/amd64/certmgr -install -store uCA -crl -file in.crl
 ```
 
+Удалить сертификат из хранилища по отпечатку:
+```
+$ /opt/cprocsp/bin/amd64/certmgr -delete -store ⟨store⟩ -thumbprint ⟨sha1⟩
+```
+
 Экспортировать сертификат без ключа (в виде CER-файла):
 ```
 $ /opt/cprocsp/bin/amd64/certmgr -export -certificate -thumbprint ⟨sha1⟩ -dest out.cer
@@ -1450,6 +1455,7 @@ $ /opt/cprocsp/bin/amd64/certmgr -export -certificate -thumbprint ⟨sha1⟩ -de
 ```
 $ /opt/cprocsp/bin/amd64/certmgr -export -pfx -thumbprint ⟨sha1⟩ -dest out.pfx
 ```
+Примечание: опционально `-pin ⟨password⟩`.
 
 Создать отсоединённую ЭП для файла `in.pdf` (форматы CAdES-BES, CAdES-X Long Type 1 и CAdES-T):
 ```
