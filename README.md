@@ -1890,6 +1890,11 @@ $ yum list installed
 $ rpm -qR ⟨package⟩
 ```
 
+Вывести changelog:
+```
+$ rpm -q --changelog ⟨package⟩
+```
+
 Вывести список файлов, установленных пакетом (2 варианта):
 ```
 $ rpm -ql ⟨package⟩
