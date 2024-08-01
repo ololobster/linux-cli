@@ -1429,6 +1429,17 @@ $ gpg --output out.gpg --encrypt --recipient ⟨id⟩ in.txt
 
 ### КриптоПро
 
+Сертификаты и ключи живут в контейнерах, контейнеры живут на носителях.
+
+Вывести список носителей:
+```
+$ /opt/cprocsp/bin/amd64/csptest -enum -info -type PP_ENUMREADERS -flags 32
+```
+Вывести список контейнеров:
+```
+$ /opt/cprocsp/bin/amd64/csptest -keyset -enum_cont -fqcn -verifyc
+```
+
 Вывести сертификаты в `uMy` (личном хранилище) и `mRoot` (корневом хранилище):
 ```
 $ /opt/cprocsp/bin/amd64/certmgr -list -store uMy
