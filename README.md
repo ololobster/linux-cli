@@ -1446,7 +1446,7 @@ $ /opt/cprocsp/bin/amd64/certmgr -list -store uMy
 $ /opt/cprocsp/bin/amd64/certmgr -list -store mRoot
 ```
 
-Импортировать сертификат и ключ (в виде PFX-файла) в личное хранилище:
+Импортировать сертификат и ключ (в виде PFX-файла ака PKCS#12) в личное хранилище:
 ```
 $ /opt/cprocsp/bin/amd64/certmgr -install -store uMy -pfx -file in.pfx -pin ⟨password⟩
 ```
@@ -1471,7 +1471,7 @@ $ /opt/cprocsp/bin/amd64/certmgr -delete -store ⟨store⟩ -thumbprint ⟨sha1�
 $ /opt/cprocsp/bin/amd64/certmgr -export -certificate -thumbprint ⟨sha1⟩ -dest out.cer
 ```
 
-Экспортировать сертификат с ключом (в виде PFX-файла):
+Экспортировать сертификат с ключом (в виде PFX-файла ака PKCS#12):
 ```
 $ /opt/cprocsp/bin/amd64/certmgr -export -pfx -thumbprint ⟨sha1⟩ -dest out.pfx
 ```
@@ -2548,6 +2548,11 @@ $ qpdf --qdf --object-streams=disable --stream-data=uncompress --generate-appear
 Снять пароль с PDF-файла:
 ```
 $ qpdf --decrypt --password=⟨password⟩ in.pdf out.pdf
+```
+
+Развернуть 1 и 2 страницу на 90° по часовой стрелке:
+```
+$ qpdf --rotate=+90:1,2 in.pdf out.pdf
 ```
 
 Получить 1-ю страницу PDF-файла в виде изображения (нужен пакет `poppler-utils`):
