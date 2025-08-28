@@ -1477,6 +1477,15 @@ $ /opt/cprocsp/bin/amd64/certmgr -export -pfx -thumbprint ⟨sha1⟩ -dest out.p
 ```
 Примечание: опционально `-pin ⟨password⟩`.
 
+Создать тестовый сертификат от УЦ `http://cryptopro.ru/certsrv`:
+```
+$ /opt/cprocsp/bin/amd64/cryptcp -creatcert \
+-rdn 'E=admin@example.com,CN=Тест,G=Иван Ильич,SN=Иванов,O=ООО Тест,L=Санкт-Петербург' \
+-cont '\\.\HDIMAGE\mycont1' \
+-certusage 1.3.6.1.5.5.7.3.2 -hashAlg 1.2.643.7.1.1.2.2 -provtype 80 \
+-exprt -ku -du -both -ca http://cryptopro.ru/certsrv
+```
+
 Создать отсоединённую ЭП для файла `in.pdf` (форматы CAdES-BES, CAdES-X Long Type 1 и CAdES-T):
 ```
 $ /opt/cprocsp/bin/amd64/cryptcp -sign -thumbprint ⟨sha1⟩ -der -detached -addchain in.pdf out.sig
@@ -1699,6 +1708,7 @@ $ addr2line -f -e okularGenerator_poppler.so 0x37e82
 Вывести список установленных пакетов:
 ```
 $ apt list --installed
+$ dpkg --list
 ```
 
 Вывести список файлов установленного пакета:
