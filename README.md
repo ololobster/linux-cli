@@ -1326,18 +1326,6 @@ $ openssl asn1parse -inform der -in ⟨file⟩
 $ certutil -L -d ~/.mozilla/firefox/*.default
 ```
 
-Вывести информацию о сертификате в виде файла `in.crt`:
-```
-$ openssl x509 -noout -text -in in.crt
-```
-
-Создать сертификат и ключи в виде PFX-файла (формат PKCS #12):
-```
-$ openssl genrsa -des3 -out myCA.key 2048
-$ openssl req -x509 -new -nodes -key myCA.key -sha256 -days 1825 -out myCA.pem
-$ openssl pkcs12 -inkey myCA.key -in myCA.pem -export -out out.pfx
-```
-
 Поучить билет Kerberos:
 ```
 $ kinit -f ⟨user⟩
@@ -1426,6 +1414,45 @@ $ gpg --output out.gpg --encrypt --recipient ⟨id⟩ in.txt
 Примечания:
 1. Чтобы зашифровать сообщение Алисе, используется её публичный ключ, а расшировывать она будет своим приватным ключом.
 1. Для расшифровки использовать `--decrypt` (см. выше).
+
+### openssl
+
+Сгенерировать пару ключей RSA, извлечь публичный в отдельный файл:
+```
+$ openssl genrsa -out keys.pem 4096
+$ openssl rsa -pubout -in keys.pem -out public.pem -outform PEM
+```
+Примечание: доки говорят, что `openssl genrsa` делает приватный ключ, в реальности публичный тоже туда пишется.
+
+Создать отсоединённую ЭП для файла `in.txt`:
+```
+$ openssl dgst -sha256 -sign keys.pem -out out.sig in.txt
+```
+
+Проверить отсоединённую ЭП `in.sig`:
+```
+$ openssl dgst -sha256 -verify public.pem -signature in.sig in.txt
+```
+
+Вывести информацию о сертификате:
+```
+$ openssl x509 -noout -text -in in.crt
+```
+
+Создать сертификат и ключи в формате PEM:
+```
+$ openssl req -new -x509 -newkey rsa:4096 -sha256 -days 365 -subj '/C=RU/L=Spb/O=Company/CN=CommonName' -out cert.pem -keyout keys.pem
+```
+
+Создать сертификат в формате PEM, использую уже существующую пару ключей `keys.pem`:
+```
+$ openssl req -new -x509 -key keys.pem -sha256 -days 365 -subj '/C=RU/L=Spb/O=Company/CN=CommonName' -out cert.pem
+```
+
+Упаковать сертификат в формате PEM и ключи в PFX-файл (формат PKCS #12):
+```
+$ openssl pkcs12 -inkey keys.pem -in cert.pem -export -out out.pfx
+```
 
 ### КриптоПро
 
