@@ -1419,39 +1419,45 @@ $ gpg --output out.gpg --encrypt --recipient ⟨id⟩ in.txt
 
 Сгенерировать пару ключей RSA, извлечь публичный в отдельный файл:
 ```
-$ openssl genrsa -out keys.pem 4096
-$ openssl rsa -pubout -in keys.pem -out public.pem -outform PEM
+$ openssl genrsa -out my.key 4096
+$ openssl rsa -pubout -in my.key -out public.pem -outform PEM
 ```
-Примечание: доки говорят, что `openssl genrsa` делает приватный ключ, в реальности публичный тоже туда пишется.
+Примечания:
+1. Доки говорят, что `openssl genrsa` делает приватный ключ, в реальности публичный тоже туда пишется.
+1. Публичный ключ в формате PEM отличается от pub-файлов SSH.
 
 Создать отсоединённую ЭП для файла `in.txt`:
 ```
 $ openssl dgst -sha256 -sign keys.pem -out out.sig in.txt
 ```
 
-Проверить отсоединённую ЭП `in.sig`:
+Проверить отсоединённую ЭП `in.sig`, использую публичный ключ `public.pem`:
 ```
 $ openssl dgst -sha256 -verify public.pem -signature in.sig in.txt
 ```
 
-Вывести информацию о сертификате:
+Вывести информацию о сертификате в формате PEM `in.crt`:
 ```
 $ openssl x509 -noout -text -in in.crt
 ```
 
 Создать сертификат и ключи в формате PEM:
 ```
-$ openssl req -new -x509 -newkey rsa:4096 -sha256 -days 365 -subj '/C=RU/L=Spb/O=Company/CN=CommonName' -out cert.pem -keyout keys.pem
+$ openssl req -new -x509 -newkey rsa:4096 -sha256 -days 365 \
+    -subj '/C=RU/L=Spb/O=Company/CN=CommonName' \
+    -out out.crt -keyout out.key
 ```
 
-Создать сертификат в формате PEM, использую уже существующую пару ключей `keys.pem`:
+Создать сертификат в формате PEM, используя уже существующую пару ключей в формате PEM `in.key`:
 ```
-$ openssl req -new -x509 -key keys.pem -sha256 -days 365 -subj '/C=RU/L=Spb/O=Company/CN=CommonName' -out cert.pem
+$ openssl req -new -x509 -key in.key -sha256 -days 365 \
+    -subj '/C=RU/L=Spb/O=Company/CN=CommonName' \
+    -out out.crt
 ```
 
-Упаковать сертификат в формате PEM и ключи в PFX-файл (формат PKCS #12):
+Упаковать сертификат в формате PEM `in.crt` и ключи в формате PEM `in.key` в PFX-файл (формат PKCS #12):
 ```
-$ openssl pkcs12 -inkey keys.pem -in cert.pem -export -out out.pfx
+$ openssl pkcs12 -inkey in.key -in in.crt -export -out out.pfx
 ```
 
 ### КриптоПро
