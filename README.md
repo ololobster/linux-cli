@@ -1432,7 +1432,7 @@ $ openssl rsa -pubout -in my.key -out public.pem -outform PEM
 $ openssl dgst -sha256 -sign in.key -out out.sig in.txt
 ```
 
-Проверить отсоединённую ЭП `in.sig`, использую публичный ключ в формате PEM `public.pem`:
+Проверить отсоединённую ЭП `in.sig`, используя публичный ключ в формате PEM `public.pem`:
 ```
 $ openssl dgst -sha256 -verify public.pem -signature in.sig in.txt
 ```
@@ -1456,7 +1456,7 @@ $ openssl req -new -x509 -key in.key -sha256 -days 365 \
     -out out.crt
 ```
 
-Упаковать сертификат в формате PEM `in.crt` и ключи в формате PEM `in.key` в PFX-файл (формат PKCS #12):
+Упаковать сертификат в формате PEM `in.crt` и ключи в формате PEM `in.key` в PFX-файл ака PKCS#12:
 ```
 $ openssl pkcs12 -inkey in.key -in in.crt -export -out out.pfx
 ```
@@ -1487,7 +1487,7 @@ $ /opt/cprocsp/bin/amd64/certmgr -install -store uMy -pfx -file in.pfx -pin ⟨p
 
 Импортировать сертификат в корневое хранилище:
 ```
-# /opt/cprocsp/bin/amd64/certmgr -install -store mRoot -file in.cer
+# /opt/cprocsp/bin/amd64/certmgr -install -store mRoot -file in.crt
 ```
 
 Импортировать CRL в личное хранилище:
@@ -1500,9 +1500,9 @@ $ /opt/cprocsp/bin/amd64/certmgr -install -store uCA -crl -file in.crl
 $ /opt/cprocsp/bin/amd64/certmgr -delete -store ⟨store⟩ -thumbprint ⟨sha1⟩
 ```
 
-Экспортировать сертификат без ключа (в виде CER-файла):
+Экспортировать сертификат без ключа (в формате PEM):
 ```
-$ /opt/cprocsp/bin/amd64/certmgr -export -certificate -thumbprint ⟨sha1⟩ -dest out.cer
+$ /opt/cprocsp/bin/amd64/certmgr -export -certificate -thumbprint ⟨sha1⟩ -base64 -dest out.crt
 ```
 
 Экспортировать сертификат с ключом (в виде PFX-файла ака PKCS#12):
@@ -1514,10 +1514,10 @@ $ /opt/cprocsp/bin/amd64/certmgr -export -pfx -thumbprint ⟨sha1⟩ -dest out.p
 Создать тестовый сертификат от УЦ `http://cryptopro.ru/certsrv`:
 ```
 $ /opt/cprocsp/bin/amd64/cryptcp -creatcert \
--rdn 'E=admin@example.com,CN=Тест,G=Иван Ильич,SN=Иванов,O=ООО Тест,L=Санкт-Петербург' \
--cont '\\.\HDIMAGE\mycont1' \
--certusage 1.3.6.1.5.5.7.3.2 -hashAlg 1.2.643.7.1.1.2.2 -provtype 80 \
--exprt -ku -du -both -ca http://cryptopro.ru/certsrv
+    -rdn 'E=admin@example.com,CN=Тест,G=Иван Ильич,SN=Иванов,O=ООО Тест,L=Санкт-Петербург' \
+    -cont '\\.\HDIMAGE\mycont1' \
+    -certusage 1.3.6.1.5.5.7.3.2 -hashAlg 1.2.643.7.1.1.2.2 -provtype 80 \
+    -exprt -ku -du -both -ca http://cryptopro.ru/certsrv
 ```
 
 Создать отсоединённую ЭП для файла `in.pdf` (форматы CAdES-BES, CAdES-X Long Type 1 и CAdES-T):
@@ -1539,7 +1539,7 @@ $ /opt/cprocsp/bin/amd64/tsputil ms -u ⟨TSP server⟩ --cert-req -a 1.2.643.7.
 
 Проверить работоспособность OCSP-службы:
 ```
-$ /opt/cprocsp/bin/amd64/ocsputil makeresp -u ⟨OCSP server⟩ in.cer
+$ /opt/cprocsp/bin/amd64/ocsputil makeresp -u ⟨OCSP server⟩ in.crt
 ```
 
 Вывести конкретную групповую политику:
