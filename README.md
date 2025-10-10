@@ -38,6 +38,7 @@
 1. [Криптография и безопасность](#криптография-и-безопасность):
    [контрольные суммы](#контрольные-суммы),
    [gpg](#gpg),
+   [openssl](#openssl),
    [КриптоПро](#криптопро),
    [Astra Linux](#astra-linux),
    [пакет ldap-utils](#пакет-ldap-utils)
@@ -1426,12 +1427,12 @@ $ openssl rsa -pubout -in my.key -out public.pem -outform PEM
 1. Доки говорят, что `openssl genrsa` делает приватный ключ, в реальности публичный тоже туда пишется.
 1. Публичный ключ в формате PEM отличается от pub-файлов SSH.
 
-Создать отсоединённую ЭП для файла `in.txt`:
+Создать отсоединённую ЭП для файла `in.txt`, используя приватный ключ из `in.key`:
 ```
-$ openssl dgst -sha256 -sign keys.pem -out out.sig in.txt
+$ openssl dgst -sha256 -sign in.key -out out.sig in.txt
 ```
 
-Проверить отсоединённую ЭП `in.sig`, использую публичный ключ `public.pem`:
+Проверить отсоединённую ЭП `in.sig`, использую публичный ключ в формате PEM `public.pem`:
 ```
 $ openssl dgst -sha256 -verify public.pem -signature in.sig in.txt
 ```
