@@ -1,5 +1,5 @@
 Заметки по Linux
-=================================
+================
 
 Оригинал — [github.com/ololobster/linux-cli](https://github.com/ololobster/linux-cli).
 
@@ -62,7 +62,7 @@
    [блок case](#блок-case),
    [циклы](#циклы)
 1. [Прочее](#прочее):
-   [youtube-dl](#youtube-dl),
+   [youtube-dl](#youtube-dl-и-yt-dlp),
    [манипуляции с документами](#манипуляции-с-документами)
 
 # Введение
@@ -2525,28 +2525,36 @@ $ find . -name '*.sh' | xargs rm -f
 # aptitude install texlive texlive-base texlive-lang-cyrillic texlive-latex-extra texlive-font-utils
 ```
 
-### youtube-dl
+### youtube-dl и yt-dlp
 
-`youtube-dl` из пакетов ОС обычно бесполезен.
-Надо ставить pipкой самый свежий:
+`yt-dlp` — это форк `youtube-dl` с поддержкой многопоточности, аргументы те же.
+
+Пакеты в ОС обычно бесполезны, надо ставить самое свежее:
 ```
-$ pip3 install youtube-dl
+$ python -m venv myenv
+$ source myenv/bin/activate
+$ pip install https://github.com/yt-dlp/yt-dlp/archive/master.tar.gz
 ```
 
 Скачать видео в 720p:
 ```
-$ youtube-dl -f 'bestvideo[height=720][ext=mp4]+bestaudio[ext=m4a]' ⟨url⟩
+$ yt-dlp -f 'bestvideo[height=720][ext=mp4]+bestaudio[ext=m4a]' ⟨url⟩
 ```
-Примечания:
-1. `--write-auto-sub` для загрузки автоматически сгенерированных субтитров.
-1. `--write-sub` для загрузки пользовательских субтитров.
+Скачать видео в 720p с авто-субтитрами:
+```
+$ yt-dlp -f 'bestvideo[height=720][ext=mp4]+bestaudio[ext=m4a]' \
+    --write-auto-sub ⟨url⟩
+```
+Скачать видео в 720p с английскими субтитрами (если ютубер их залил):
+```
+$ yt-dlp -f 'bestvideo[height=720][ext=mp4]+bestaudio[ext=m4a]' \
+    --write-sub --sub-lang 'en.*' ⟨url⟩
+```
 
 Скачать аудио дорожку:
 ```
 $ youtube-dl -x --audio-format mp3 ⟨url⟩
 ```
-
-`yt-dlp` — это форк с поддержкой многопоточности, аргументы те же.
 
 ### Манипуляции с документами
 
@@ -2603,4 +2611,3 @@ $ qpdf --rotate=+90:1,2 in.pdf out.pdf
 ```
 $ pdftoppm -singlefile -f 1 -r 72 -png in.pdf out
 ```
-
