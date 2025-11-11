@@ -1054,7 +1054,7 @@ $ curl --remote-name --output-dir ⟨path⟩ ⟨url⟩
 
 Для использования прокси задать переменную окружения `http_proxy` или `https_proxy`:
 ```
-$ https_proxy=user:password@192.168.1.1:8000 curl ⟨url⟩
+$ https_proxy=http://user:password@192.168.1.1:8000 curl ⟨url⟩
 ```
 
 Вывести HTTP-заголовки:
