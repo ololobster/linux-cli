@@ -1438,9 +1438,10 @@ $ openssl rsa -pubout -in my.key -out public.pem -outform PEM
 ```
 $ openssl genrsa -out my.key -aes256 -passout pass:⟨password⟩ 4096
 ```
-Примечание:
+Примечания:
 1. Если не задать пароль в `-passout`, то спросит в интерактивном режиме.
 1. Для использования `my.key` теперь потребуется пароль.
+   Аргумент `-passin` в помощь.
 
 Создать отсоединённую ЭП для файла `in.txt`, используя приватный ключ из `in.key`:
 ```
