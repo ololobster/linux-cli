@@ -1425,7 +1425,7 @@ $ gpg --output out.gpg --encrypt --recipient ⟨id⟩ in.txt
 
 ### openssl
 
-Сгенерировать пару ключей RSA, извлечь публичный в отдельный файл:
+Сгенерировать пару ключей RSA, извлечь публичный в отдельный файл в формате PEM:
 ```
 $ openssl genrsa -out my.key 4096
 $ openssl rsa -pubout -in my.key -out public.pem -outform PEM
@@ -1433,6 +1433,14 @@ $ openssl rsa -pubout -in my.key -out public.pem -outform PEM
 Примечания:
 1. Доки говорят, что `openssl genrsa` делает приватный ключ, в реальности публичный тоже туда пишется.
 1. Публичный ключ в формате PEM отличается от pub-файлов SSH.
+
+Сгенерировать зашифрованную пару ключей RSA:
+```
+$ openssl genrsa -out my.key -aes256 -passout pass:⟨password⟩ 4096
+```
+Примечание:
+1. Если не задать пароль в `-passout`, то спросит в интерактивном режиме.
+1. Для использования `my.key` теперь потребуется пароль.
 
 Создать отсоединённую ЭП для файла `in.txt`, используя приватный ключ из `in.key`:
 ```
