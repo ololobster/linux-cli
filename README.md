@@ -1451,7 +1451,7 @@ $ openssl genrsa -out out.key -aes256 -passout pass:⟨password⟩ 4096
    ...
    -----END ENCRYPTED PRIVATE KEY-----
    ```
-1. Для дальнейшего использования выходного файла теперь нужен пароль.
+1. Для дальнейшего использования выходного файла нужен пароль.
    Аргумент `-passin` в помощь.
 
 Извлечь публичный ключ:
@@ -1481,18 +1481,20 @@ $ openssl dgst -sha256 -verify public.pem -signature in.sig in.txt
 $ openssl x509 -noout -text -in in.crt
 ```
 
-Создать сертификат и ключи в формате PEM:
+Создать сертификат за 3 шага (ключи → запрос на сертификат → сертификат):
 ```
-$ openssl req -new -x509 -newkey rsa:4096 -sha256 -days 365 \
+$ openssl genrsa -out my.key 2048
+$ openssl req -new -key my.key -sha256 \
     -subj '/C=RU/L=Spb/O=Company/CN=CommonName' \
-    -out out.crt -keyout out.key
+    -out my.csr
+$ openssl x509 -req -in my.csr -key my.key -days 365 -out out.crt
 ```
 
-Создать сертификат в формате PEM, используя уже существующую пару ключей в формате PEM `in.key`:
+Создать сертификат за 1 шаг:
 ```
-$ openssl req -new -x509 -key in.key -sha256 -days 365 \
+$ openssl req -new -x509 -newkey rsa:2048 -sha256 -days 365 \
     -subj '/C=RU/L=Spb/O=Company/CN=CommonName' \
-    -out out.crt
+    -out out.crt -keyout out.key
 ```
 
 Упаковать сертификат в формате PEM `in.crt` и ключи в формате PEM `in.key` в PFX-файл ака PKCS#12:
