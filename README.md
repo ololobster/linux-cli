@@ -1425,6 +1425,8 @@ $ gpg --output out.gpg --encrypt --recipient ⟨id⟩ in.txt
 
 ### openssl
 
+Кодировка PEM (Privacy Enhanced Mail) — это текстовый формат, DER (Distinguished Encoding Rules) — двоичный.
+
 Сгенерировать пару ключей RSA в формате PKCS#8 и кодировке PEM (2 варианта):
 ```
 $ openssl genrsa -out out.key 4096
@@ -1489,6 +1491,13 @@ $ openssl req -new -key my.key -sha256 \
     -out my.csr
 $ openssl x509 -req -in my.csr -key my.key -days 365 -out out.crt
 ```
+Примечания:
+1. Сертификат X.509 в кодировке PEM имеет следующий вид:
+   ```
+   -----BEGIN CERTIFICATE-----
+   ...
+   -----END CERTIFICATE-----
+   ```
 
 Создать сертификат за 1 шаг:
 ```
