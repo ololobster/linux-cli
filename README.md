@@ -1427,6 +1427,9 @@ $ gpg --output out.gpg --encrypt --recipient ⟨id⟩ in.txt
 
 Кодировка PEM (Privacy Enhanced Mail) — это текстовый формат, DER (Distinguished Encoding Rules) — двоичный.
 
+Корневые сертификаты выпускаются корневым УЦ.
+Их отличительные особенности: `Issuer` = `Subject`, в расширении `Basic Constraints` атрибут `CA` = `TRUE`.
+
 Сгенерировать пару ключей RSA в формате PKCS#8 и кодировке PEM (2 варианта):
 ```
 $ openssl genrsa -out out.key 4096
@@ -1468,6 +1471,11 @@ $ openssl rsa -pubout -in in.key -out public.pem -outform PEM
    -----END PUBLIC KEY-----
    ```
 
+Сгенерировать пару ключей ECDSA (Elliptic Curve Digital Signature Algorithm):
+```
+$ openssl ecparam -genkey -name prime256v1 -out out.key
+```
+
 Создать отсоединённую ЭП для файла `in.txt`, используя приватный ключ из `in.key`:
 ```
 $ openssl dgst -sha256 -sign in.key -out out.sig in.txt
@@ -1478,12 +1486,12 @@ $ openssl dgst -sha256 -sign in.key -out out.sig in.txt
 $ openssl dgst -sha256 -verify public.pem -signature in.sig in.txt
 ```
 
-Вывести информацию о сертификате в формате PEM `in.crt`:
+Вывести информацию о сертификате X.509 в кодировке PEM или DER:
 ```
 $ openssl x509 -noout -text -in in.crt
 ```
 
-Создать сертификат за 3 шага (ключи → запрос на сертификат → сертификат):
+Создать корневой сертификат за 3 шага (ключи → запрос на сертификат → сертификат):
 ```
 $ openssl genrsa -out my.key 2048
 $ openssl req -new -key my.key -sha256 \
@@ -1498,12 +1506,18 @@ $ openssl x509 -req -in my.csr -key my.key -days 365 -out out.crt
    ...
    -----END CERTIFICATE-----
    ```
+1. Сертификат X.509 содержит открытый ключ и предназначен для распространения и проверки подлинности.
 
-Создать сертификат за 1 шаг:
+Создать корневой сертификат за 1 шаг:
 ```
-$ openssl req -new -x509 -newkey rsa:2048 -sha256 -days 365 \
+$ openssl req -new -x509 -newkey rsa:2048 -noenc -sha256 -days 365 \
     -subj '/C=RU/L=Spb/O=Company/CN=CommonName' \
     -out out.crt -keyout out.key
+```
+
+Перегнать сертификат X.509 из кодировки PEM в DER:
+```
+$ openssl x509 -in in.crt -outform DER -out out.der
 ```
 
 Упаковать сертификат в формате PEM `in.crt` и ключи в формате PEM `in.key` в PFX-файл ака PKCS#12:
