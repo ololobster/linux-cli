@@ -1471,9 +1471,10 @@ $ openssl rsa -pubout -in in.key -out public.pem -outform PEM
    -----END PUBLIC KEY-----
    ```
 
-Сгенерировать пару ключей ECDSA (Elliptic Curve Digital Signature Algorithm):
+Сгенерировать пару ключей ECDSA (2 варианта):
 ```
 $ openssl ecparam -genkey -name prime256v1 -out out.key
+$ openssl genpkey -algorithm EC -pkeyopt ec_paramgen_curve:P-256 -out out.key
 ```
 
 Создать отсоединённую ЭП для файла `in.txt`, используя приватный ключ из `in.key`:
@@ -1506,7 +1507,7 @@ $ openssl x509 -req -in my.csr -key my.key -days 365 -out out.crt
    ...
    -----END CERTIFICATE-----
    ```
-1. Сертификат X.509 содержит открытый ключ и предназначен для распространения и проверки подлинности.
+1. Сертификат X.509 содержит открытый ключ и предназначен для распространения.
 
 Создать корневой сертификат за 1 шаг:
 ```
