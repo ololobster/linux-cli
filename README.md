@@ -1459,12 +1459,12 @@ $ openssl genrsa -out out.key -aes256 -passout pass:⟨password⟩ 4096
 1. Для дальнейшего использования выходного файла нужен пароль.
    Аргумент `-passin` в помощь.
 
-Извлечь публичный ключ:
+Извлечь публичный ключ из пары ключей RSA:
 ```
-$ openssl rsa -pubout -in in.key -out public.pem -outform PEM
+$ openssl rsa -pubout -in in.key -outform PEM -out public.pem
 ```
 Примечания:
-1. Публичный ключ в формате PEM имеет следующий вид (отличается от pub-файлов SSH):
+1. Публичный ключ в кодировке PEM имеет следующий вид (отличается от pub-файлов SSH):
    ```
    -----BEGIN PUBLIC KEY-----
    ...
@@ -1482,7 +1482,7 @@ $ openssl genpkey -algorithm EC -pkeyopt ec_paramgen_curve:P-256 -out out.key
 $ openssl dgst -sha256 -sign in.key -out out.sig in.txt
 ```
 
-Проверить отсоединённую ЭП `in.sig`, используя публичный ключ в формате PEM `public.pem`:
+Проверить отсоединённую ЭП `in.sig`, используя публичный ключ `public.pem`:
 ```
 $ openssl dgst -sha256 -verify public.pem -signature in.sig in.txt
 ```
@@ -1524,6 +1524,11 @@ $ openssl x509 -in in.crt -outform DER -out out.der
 Упаковать сертификат в формате PEM `in.crt` и ключи в формате PEM `in.key` в PFX-файл ака PKCS#12:
 ```
 $ openssl pkcs12 -inkey in.key -in in.crt -export -out out.pfx
+```
+
+Извлечь публичный ключ из сертификата X.509:
+```
+$ openssl x509 -pubkey -noout -in in.crt -out out.pem
 ```
 
 ### КриптоПро
