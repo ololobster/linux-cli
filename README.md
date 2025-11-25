@@ -1324,11 +1324,6 @@ alias grep='grep --color=auto'
 
 # Криптография и безопасность
 
-Расшифровать сообщение в формате ASN.1 DER:
-```
-$ openssl asn1parse -inform der -in ⟨file⟩
-```
-
 Вывести сертификаты в указанной БД:
 ```
 $ certutil -L -d ~/.mozilla/firefox/*.default
@@ -1426,6 +1421,7 @@ $ gpg --output out.gpg --encrypt --recipient ⟨id⟩ in.txt
 ### openssl
 
 Кодировка PEM (Privacy Enhanced Mail) — это текстовый формат, DER (Distinguished Encoding Rules) — двоичный.
+ASN.1 — это IDL (язык описания интерфейсов) древних людей.
 
 Корневые сертификаты выпускаются корневым УЦ.
 Их отличительные особенности: `Issuer` = `Subject`, в расширении `Basic Constraints` атрибут `CA` = `TRUE`.
@@ -1529,6 +1525,11 @@ $ openssl pkcs12 -inkey in.key -in in.crt -export -out out.pfx
 Извлечь публичный ключ из сертификата X.509:
 ```
 $ openssl x509 -pubkey -noout -in in.crt -out out.pem
+```
+
+Расшифровать сообщение в формате ASN.1 DER:
+```
+$ openssl asn1parse -inform der -in ⟨file⟩
 ```
 
 ### КриптоПро
