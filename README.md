@@ -1488,6 +1488,11 @@ $ openssl dgst -sha256 -verify public.pem -signature in.sig in.txt
 $ openssl x509 -noout -text -in in.crt
 ```
 
+Проверить сертификат X.509, используя цепочку из `chain.pem`:
+```
+$ openssl verify -verbose -CAfile chain.pem in.crt
+```
+
 Создать корневой сертификат за 3 шага (ключи → запрос на сертификат → сертификат):
 ```
 $ openssl genrsa -out my.key 2048
@@ -1515,6 +1520,11 @@ $ openssl req -new -x509 -newkey rsa:2048 -noenc -sha256 -days 365 \
 Перегнать сертификат X.509 из кодировки PEM в DER:
 ```
 $ openssl x509 -in in.crt -outform DER -out out.der
+```
+
+Сертификаты X.509 в кодировке PEM можно невозбранно сливать воедино:
+```
+$ cat in1.crt in2.crt > chain.pem
 ```
 
 Упаковать сертификат в формате PEM `in.crt` и ключи в формате PEM `in.key` в PFX-файл ака PKCS#12:
