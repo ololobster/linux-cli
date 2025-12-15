@@ -2398,6 +2398,35 @@ else
     echo 'return code != 0'
 fi
 ```
+Примеры:
+1. Если переменная `in` содержит строку:
+   ```
+   if echo "${in}" | grep -q ⟨pattern⟩
+   then
+       ...
+   fi
+   ```
+1. Если переменная `in` не содержит строку:
+   ```
+   if echo "${in}" | grep -q -v ⟨pattern⟩
+   then
+       ...
+   fi
+   ```
+1. Если файл `in.txt` содержит строку:
+   ```
+   if grep -q ⟨pattern⟩ in.txt
+   then
+       ...
+   fi
+   ```
+1. Если файл `in.txt` не содержит строку:
+   ```
+   if grep -q -v ⟨pattern⟩ in.txt
+   then
+       ...
+   fi
+   ```
 
 Для строк есть `==` и `!=`.
 Для чисел есть `-eq`, `-ne`, `-lt` (меньше), `-gt` (больше), `-le` и `-ge`.
