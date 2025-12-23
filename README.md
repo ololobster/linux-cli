@@ -2134,6 +2134,20 @@ $ rpmspec --srpm --query --qf '%{version}' in.spec
 $ rpm --eval '%{_datadir}'
 ```
 
+Пример использования условий в SPEC-файле:
+```
+%global is_rosa %( if [ -f /etc/rosa-release ]; then echo "1"; else echo "0"; fi )
+%global is_redos %( if [ -f /etc/redos-release ]; then echo "1"; else echo "0"; fi )
+%if %is_alt || %is_rosa
+...
+%else
+...
+%endif
+%if ! %is_rosa
+...
+%endif
+```
+
 # Ядро, модули ядра
 
 Вывести параметры, с которыми сейчас загружена ОС:
