@@ -1562,25 +1562,21 @@ $ /opt/cprocsp/bin/amd64/csptest -enum -info -type PP_ENUMREADERS -flags 32
 $ /opt/cprocsp/bin/amd64/csptest -keyset -enum_cont -fqcn -verifyc
 ```
 
-Вывести сертификаты в `uMy` (личном хранилище) и `mRoot` (корневом хранилище):
+Вывести сертификаты в личном (`uMy`) или корневом хранилище (`mRoot`):
 ```
 $ /opt/cprocsp/bin/amd64/certmgr -list -store uMy
 $ /opt/cprocsp/bin/amd64/certmgr -list -store mRoot
 ```
 
-Импортировать сертификат и ключ (в виде PFX-файла ака PKCS#12) в личное хранилище:
+Импортировать сертификат в личное (`uMy`) или корневое хранилище (`mRoot`):
 ```
-$ /opt/cprocsp/bin/amd64/certmgr -install -store uMy -pfx -file in.pfx -pin ⟨password⟩
-```
-
-Импортировать сертификат в корневое хранилище:
-```
+$ /opt/cprocsp/bin/amd64/certmgr -install -store uMy -file in.crt
 # /opt/cprocsp/bin/amd64/certmgr -install -store mRoot -file in.crt
 ```
 
-Импортировать CRL в личное хранилище:
+Импортировать сертификат и приватный ключ (в виде PFX-файла ака PKCS#12) в личное хранилище:
 ```
-$ /opt/cprocsp/bin/amd64/certmgr -install -store uCA -crl -file in.crl
+$ /opt/cprocsp/bin/amd64/certmgr -install -store uMy -pfx -file in.pfx -pin ⟨password⟩
 ```
 
 Удалить сертификат из хранилища по отпечатку:
@@ -1588,12 +1584,12 @@ $ /opt/cprocsp/bin/amd64/certmgr -install -store uCA -crl -file in.crl
 $ /opt/cprocsp/bin/amd64/certmgr -delete -store ⟨store⟩ -thumbprint ⟨sha1⟩
 ```
 
-Экспортировать сертификат без ключа (в формате PEM):
+Экспортировать сертификат без ключа (в формате PEM) по отпечатку:
 ```
 $ /opt/cprocsp/bin/amd64/certmgr -export -certificate -thumbprint ⟨sha1⟩ -base64 -dest out.crt
 ```
 
-Экспортировать сертификат с ключом (в виде PFX-файла ака PKCS#12):
+Экспортировать сертификат с ключом (в виде PFX-файла ака PKCS#12) по отпечатку:
 ```
 $ /opt/cprocsp/bin/amd64/certmgr -export -pfx -thumbprint ⟨sha1⟩ -dest out.pfx
 ```
@@ -1606,6 +1602,16 @@ $ /opt/cprocsp/bin/amd64/cryptcp -creatcert \
     -cont '\\.\HDIMAGE\mycont1' \
     -certusage 1.3.6.1.5.5.7.3.2 -hashAlg 1.2.643.7.1.1.2.2 -provtype 80 \
     -exprt -ku -du -both -ca http://cryptopro.ru/certsrv
+```
+
+Вывести кеш CRL (хранилище `ucache`):
+```
+$ /opt/cprocsp/bin/amd64/certmgr -list -crl -store ucache
+```
+
+Зачистить кеш CRL:
+```
+$ /opt/cprocsp/bin/amd64/certmgr -delete -crl -all -store ucache
 ```
 
 Создать отсоединённую ЭП для файла `in.pdf` (форматы CAdES-BES, CAdES-X Long Type 1 и CAdES-T):
