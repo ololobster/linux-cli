@@ -588,36 +588,41 @@ $ scp ⟨source⟩ ⟨target directory⟩
 
 ### Архивы
 
-Распаковать `tar.gz`:
+Распаковать `.tar.gz` или `.tar.xz` в текущий каталог:
 ```
 $ tar -xf in.tar.gz
 ```
-Вынуть один файл из `tar.gz`:
+Вынуть один файл из `.tar.gz`:
 ```
 $ tar -zxf in.tar.gz ⟨file to extract⟩
 ```
-Примечание: `--directory` ака `-C` задаёт каталог для записи.
+`--directory` ака `-C` позволяет распаковать в заданный каталог:
+```
+$ tar -C ./out -xf in.tar.gz
+```
 
 Вывести список файлов, запакованных в `tar.gz`:
 ```
 $ tar -ztf in.tar.gz
 ```
 
-Запаковать файл или каталог в `tar.gz`:
+Запаковать в `.tar.gz` или `.tar.xz`:
 ```
 $ tar -zcf out.tar.gz ⟨file or directory⟩
-```
-Запаковать всё содержимое текущего каталога в `tar.gz`:
-```
-$ tar -zcvf out.tar.gz .
+$ tar -cJf out.tar.xz ⟨file or directory⟩
 ```
 Примечания:
 1. Можно указать сразу много файлов и каталогов.
 1. `tar` нормально пакует символьные ссылки.
 
+Запаковать всё содержимое текущего каталога в `.tar.gz`:
+```
+$ tar -zcf ../out.tar.gz .
+```
+
 Запаковать и отправить по SSH без создания файла на локальной ЭВМ:
 ```
-$ tar -zcvf - --one-file-system ⟨file or directory⟩ | ssh ⟨login⟩@⟨host⟩ "cat > ⟨new tar.gz file⟩"
+$ tar -zcf - --one-file-system ⟨file or directory⟩ | ssh ⟨login⟩@⟨host⟩ "cat > ⟨new tar.gz file⟩"
 ```
 
 Распаковать `zip` (2 способа):
