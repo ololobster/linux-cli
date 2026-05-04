@@ -620,6 +620,11 @@ $ tar -cJf out.tar.xz ⟨file or directory⟩
 $ tar -zcf ../out.tar.gz .
 ```
 
+Запаковать каталог в `.tar.gz`, отфильтровав ненужное:
+```
+$ tar --exclude=.git --exclude=.gitignore -zcf out.tar.gz in-directory
+```
+
 Запаковать и отправить по SSH без создания файла на локальной ЭВМ:
 ```
 $ tar -zcf - --one-file-system ⟨file or directory⟩ | ssh ⟨login⟩@⟨host⟩ "cat > ⟨new tar.gz file⟩"
