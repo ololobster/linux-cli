@@ -1403,6 +1403,17 @@ $ gpg --show-keys in.gpg
 $ gpg --full-generate-key
 ```
 
+Удалить пару ключей:
+```
+$ gpg --delete-secret-key ⟨id⟩
+$ gpg --delete-key ⟨id⟩
+```
+
+Импортировать публичный ключ или пару ключей:
+```
+$ gpg --import in.asc
+```
+
 Экспортировать публичный ключ в бинарном формате:
 ```
 $ gpg --output out.gpg --export ⟨id⟩
@@ -1416,7 +1427,7 @@ $ gpg --armor --output out.asc --export ⟨id⟩
 $ gpg --armor --export ⟨id⟩
 ```
 
-Создать откреплённую ЭП для файла `in.txt`:
+Создать ЭП для файла `in.txt`:
 ```
 $ gpg --output out.sig --sign in.txt
 ```
@@ -1449,12 +1460,13 @@ $ gpg --verify in.sig in.txt
 $ gpg --output out.gpg --encrypt --recipient ⟨id⟩ in.txt
 ```
 Примечания:
-1. Чтобы зашифровать сообщение Алисе, используется её публичный ключ, а расшировывать она будет своим приватным ключом.
+1. Чтобы зашифровать сообщение Алисе, используется её публичный ключ,
+   а расшифровывать она будет своим приватным ключом.
 1. Для расшифровки использовать `--decrypt` (см. выше).
 
 ### openssl
 
-Кодировка PEM (Privacy Enhanced Mail) — это текстовый формат, DER (Distinguished Encoding Rules) — двоичный.
+Кодировка PEM (Privacy Enhanced Mail) — это текстовый формат, DER (Distinguished Encoding Rules) — бинарный.
 ASN.1 — это IDL (язык описания интерфейсов) древних людей.
 
 Корневые сертификаты выпускаются корневым УЦ.
