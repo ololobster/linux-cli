@@ -1385,9 +1385,17 @@ $ cksum ⟨file⟩
 
 ### gpg
 
+armor-формат — это ASCII-текст.
+Альтернативой ему является бинарный формат.
+
 Вывести список ключей:
 ```
 $ gpg --list-keys
+```
+
+Посмотреть что в gpg-файле, не импортируя его:
+```
+$ gpg --show-keys in.gpg
 ```
 
 Создать ключ:
@@ -1395,12 +1403,20 @@ $ gpg --list-keys
 $ gpg --full-generate-key
 ```
 
-Экспортировать публичный ключ в виде key-файла:
+Экспортировать публичный ключ в бинарном формате:
 ```
-$ gpg --armor --output ⟨output key file⟩ --export ⟨id⟩
+$ gpg --output out.gpg --export ⟨id⟩
+```
+Экспортировать публичный ключ в текстовом формате:
+```
+$ gpg --armor --output out.asc --export ⟨id⟩
+```
+Экспортировать публичный ключ в текстовом формате прямо в stdout:
+```
+$ gpg --armor --export ⟨id⟩
 ```
 
-Создать ЭП для файла `in.txt`:
+Создать откреплённую ЭП для файла `in.txt`:
 ```
 $ gpg --output out.sig --sign in.txt
 ```
