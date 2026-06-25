@@ -124,10 +124,11 @@ $ docker network rm traefic_network
 
 Манифест — это JSON-документ, описывающий образ.
 Стандартный манифест (тип `application/vnd.oci.image.manifest.v1+json`) описывает слои образа и конфигурационный блоб.
-Пример манифеста для образа `keycloak/keycloak` под архитектуру amd64:
+Пример манифеста образа `keycloak/keycloak` под архитектуру amd64:
 ```
-$ curl -H "Authorization: Bearer $TOKEN" \
-    https://registry-1.docker.io/v2/keycloak/keycloak/manifests/sha256:3e58dc82a9b72f364f37dac17f99fcaf53d0052a3c1ad7f00b069a1ed43201c0
+$ MANIFEST_ID=sha256:3e58dc82a9b72f364f37dac17f99fcaf53d0052a3c1ad7f00b069a1ed43201c0
+$ curl -H "Authorization: Bearer ${TOKEN}" \
+    "https://registry-1.docker.io/v2/keycloak/keycloak/manifests/${MANIFEST_ID}"
 {
     "schemaVersion": 2,
     "mediaType": "application/vnd.oci.image.manifest.v1+json",
@@ -157,9 +158,9 @@ $ curl -H "Authorization: Bearer $TOKEN" \
 
 Один тег может содержать образы для разных архитектур.
 Такому тегу соответсвует манифест типа `application/vnd.oci.image.index.v1+json` ака fat manifest.
-Пример для тега `26.6.2-2` образа `keycloak/keycloak`:
+Пример манифеста тега `26.6.2-2` проекта `keycloak/keycloak`:
 ```
-$ curl -H "Authorization: Bearer $TOKEN" \
+$ curl -H "Authorization: Bearer ${TOKEN}" \
     https://registry-1.docker.io/v2/keycloak/keycloak/manifests/26.6.2-2
 {
     "schemaVersion": 2,
